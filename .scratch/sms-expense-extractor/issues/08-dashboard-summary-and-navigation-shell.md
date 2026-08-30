@@ -6,9 +6,9 @@
 
 **Status:** ready-for-agent
 
-- [ ] Main bottom tab navigation links Dashboard, Transactions, Review Queue (with badge), and Rules screens.
-- [ ] Dashboard calculates and displays total debits, total credits, and net balance for the selected month/week.
-- [ ] Category distribution breakdown shows spending percentages with category icons and color coding.
-- [ ] Header or floating action button triggers Batch Sync with spinner and shows "Last synced: <time>".
-- [ ] Permission check on launch prompts user to grant `READ_SMS` permission if not already granted.
-- [ ] End-to-end component test verifies initial load, sync execution, and summary card metric updates.
+- [x] Main bottom tab navigation links Dashboard, Transactions, Review Queue (with badge), and Rules screens.
+- [x] Dashboard calculates and displays total debits, total credits, and net balance for the selected month/week.
+- [x] Category distribution breakdown shows spending percentages with category icons and color coding.
+- [x] Header or floating action button triggers Batch Sync with spinner and shows "Last synced: <time>".
+- [x] Permission check on launch prompts user to grant `READ_SMS` permission if not already granted.
+- [x] End-to-end component test verifies initial load, sync execution, and summary card metric updates.

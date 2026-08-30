@@ -6,8 +6,8 @@
 
 **Status:** ready-for-agent
 
-- [ ] Sender rules screen displays active/inactive sender cards with counts of configured templates.
-- [ ] Rule creation modal validates and saves exact sender keyword (rejects empty or whitespace-only names).
-- [ ] Visual Template Builder form supports inputting template strings containing visual tokens (`{amount}`, `{merchant}`, `{account}`, `{balance}`, `{date}`) and selecting transaction type.
-- [ ] Live preview box allows users to paste sample SMS text and visually see parsed fields before saving.
-- [ ] Component tests verify rule addition, toggle state changes, and live sample extraction preview.
+- [x] Sender rules screen displays active/inactive sender cards with counts of configured templates.
+- [x] Rule creation modal validates and saves exact sender keyword (rejects empty or whitespace-only names).
+- [x] Visual Template Builder form supports inputting template strings containing visual tokens (`{amount}`, `{merchant}`, `{account}`, `{balance}`, `{date}`) and selecting transaction type.
+- [x] Live preview box allows users to paste sample SMS text and visually see parsed fields before saving.
+- [x] Component tests verify rule addition, toggle state changes, and live sample extraction preview.

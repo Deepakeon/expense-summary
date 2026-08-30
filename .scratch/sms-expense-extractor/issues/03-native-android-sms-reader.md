@@ -6,8 +6,8 @@
 
 **Status:** ready-for-agent
 
-- [ ] Custom Kotlin native module is registered in the Android project without third-party SMS package dependencies.
-- [ ] Native module provides an async method to query SMS inbox by exact sender list and timestamp cutoff.
-- [ ] Native module handles runtime permission checks and requests for `android.permission.READ_SMS`.
-- [ ] TypeScript bridge module exposes strongly typed methods (`requestPermissions`, `hasPermissions`, `fetchSmsBatch`) with a mock provider for unit and integration testing.
-- [ ] Unit tests verify bridge response formatting and mock provider behavior.
+- [x] Custom Kotlin native module is registered in the Android project without third-party SMS package dependencies.
+- [x] Native module provides an async method to query SMS inbox by exact sender list and timestamp cutoff.
+- [x] Native module handles runtime permission checks and requests for `android.permission.READ_SMS`.
+- [x] TypeScript bridge module exposes strongly typed methods (`requestPermissions`, `hasPermissions`, `fetchSmsBatch`) with a mock provider for unit and integration testing.
+- [x] Unit tests verify bridge response formatting and mock provider behavior.

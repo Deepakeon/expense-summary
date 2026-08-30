@@ -6,8 +6,8 @@
 
 **Status:** ready-for-agent
 
-- [ ] Review Queue screen displays pending quarantined messages with sender header, received timestamp, and raw SMS preview.
-- [ ] 1-tap "Dismiss" action updates message status to `dismissed` in SQLite and removes it from the active review list.
-- [ ] "Create/Tune Template" button opens the Template Builder pre-filling the sender rule and the raw SMS into the sample tester.
-- [ ] Badge count indicates the number of pending quarantined messages needing attention.
-- [ ] Component tests verify dismissal, navigation with pre-filled sample text, and empty queue state.
+- [x] Review Queue screen displays pending quarantined messages with sender header, received timestamp, and raw SMS preview.
+- [x] 1-tap "Dismiss" action updates message status to `dismissed` in SQLite and removes it from the active review list.
+- [x] "Create/Tune Template" button opens the Template Builder pre-filling the sender rule and the raw SMS into the sample tester.
+- [x] Badge count indicates the number of pending quarantined messages needing attention.
+- [x] Component tests verify dismissal, navigation with pre-filled sample text, and empty queue state.

@@ -1,44 +1,36 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React, { useMemo } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { getDatabaseRepository } from './src/db/getDb';
+import { BatchSyncService } from './src/sync/syncService';
+import { smsReader } from './src/sms/smsReader';
+import { AppShell } from './src/navigation/AppShell';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const repository = useMemo(() => getDatabaseRepository(), []);
+  const syncService = useMemo(
+    () => new BatchSyncService(repository, smsReader),
+    [repository]
+  );
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <StatusBar barStyle="light-content" />
+      <View style={styles.container}>
+        <AppShell
+          repository={repository}
+          syncService={syncService}
+          smsReader={smsReader}
+        />
+      </View>
     </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0F172A',
   },
 });
 
