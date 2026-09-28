@@ -2,6 +2,7 @@
 name: Bug Resolver
 description: Resolves reported bug issues by analyzing the codebase, fixing the bug, verifying with tests, and opening a pull request.
 intent: Resolve confirmed bug issues with verified code fixes and automated unit tests submitted via a pull request.
+engine: gemini
 
 skills:
   - mattpocock/skills/diagnosing-bugs@c55ee46073ed923f86ce59a5eb3b6d895095d1b7
@@ -52,6 +53,7 @@ tools:
   bash: [npm, npx, node, git, grep, find, cat, ls, jq]
 
 safe-outputs:
+  threat-detection: false
   create-pull-request:
     title-prefix: "[fix] "
     labels: [bug, fix]
