@@ -39,6 +39,7 @@ network:
     - defaults
     - node
     - github
+    - gemini
 
 steps:
   - uses: actions/setup-node@v7
