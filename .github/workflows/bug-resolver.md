@@ -2,6 +2,7 @@
 name: Bug Resolver
 description: Resolves reported bug issues by analyzing the codebase, fixing the bug, verifying with tests, and opening a pull request.
 intent: Resolve confirmed bug issues with verified code fixes and automated unit tests submitted via a pull request.
+model: gemini-2.5-flash
 engine:
   id: gemini
   version: "0.43.0"
@@ -40,6 +41,7 @@ network:
     - node
     - github
     - gemini
+    - play.googleapis.com
 
 steps:
   - uses: actions/setup-node@v7
