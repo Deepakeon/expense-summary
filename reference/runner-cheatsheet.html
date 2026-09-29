@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference: GitHub Actions Self-Hosted Runner Cheat Sheet</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Reference Document &bull; Operations &amp; Syntax</div>
+      <h1>Self-Hosted Runner Cheat Sheet</h1>
+      <p class="subtitle">Quick-reference commands, architecture, service management, and workflow routing.</p>
+    </header>
+
+    <section>
+      <h2>1. Architecture &amp; Networking</h2>
+      <p>Self-hosted runners use <strong>outbound long-polling</strong> over HTTPS (port 443) to GitHub. No inbound open ports, public IP, or firewall ingress rules are required.</p>
+      <pre><code>[ Local Machine Runner ]  ---(Outbound HTTPS 443)--->  [ GitHub Actions Backend ]
+                                 Polls for queued jobs
+                                 Streams console logs</code></pre>
+    </section>
+
+    <section>
+      <h2>2. Provisioning &amp; Registration</h2>
+      <div class="step-card">
+        <div class="step-header">A. Directory Setup &amp; Download (x64 Linux)</div>
+        <pre><code>mkdir -p ~/actions-runner && cd ~/actions-runner
+curl -o actions-runner-linux-x64-2.337.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-x64-2.337.0.tar.gz
+tar xzf ./actions-runner-linux-x64-2.337.0.tar.gz</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">B. Fetch Registration Token via GitHub CLI</div>
+        <pre><code># Generate 1-hour ephemeral registration token
+gh api --method POST repos/Deepakeon/expensse-summary/actions/runners/registration-token --jq .token</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">C. Configure Runner</div>
+        <pre><code>./config.sh --url https://github.com/Deepakeon/expensse-summary --token &lt;REGISTRATION_TOKEN&gt;</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Execution Modes</h2>
+      <h3>Foreground Interactive (Debug / Testing)</h3>
+      <pre><code>cd ~/actions-runner
+./run.sh</code></pre>
+
+      <h3>Background Systemd Service (Persistent)</h3>
+      <pre><code>cd ~/actions-runner
+sudo ./svc.sh install $USER    # Install service for current user
+sudo ./svc.sh start           # Start runner daemon
+sudo ./svc.sh status          # Check systemd status
+sudo ./svc.sh stop            # Stop runner daemon
+sudo ./svc.sh uninstall       # Remove systemd unit</code></pre>
+    </section>
+
+    <section>
+      <h2>4. Workflow Routing Syntax</h2>
+      <h3>Standard GitHub Actions</h3>
+      <pre><code>jobs:
+  agent:
+    runs-on: self-hosted       # Targets any available self-hosted runner
+    # Or match multiple labels:
+    # runs-on: [self-hosted, linux, x64]</code></pre>
+
+      <h3>GitHub Agentic Workflows (<code>gh-aw</code> Frontmatter)</h3>
+      <pre><code>---
+name: Bug Resolver
+runs-on: self-hosted
+engine:
+  id: gemini
+  version: "0.43.0"
+...
+---</code></pre>
+      <p>Recompile workflow lockfiles after updating frontmatter:</p>
+      <pre><code>gh aw compile</code></pre>
+    </section>
+
+    <section>
+      <h2>5. De-registration &amp; Cleanup</h2>
+      <pre><code># Obtain removal token
+REMOVE_TOKEN=$(gh api --method POST repos/Deepakeon/expensse-summary/actions/runners/remove-token --jq .token)
+
+# Stop service and remove configuration
+sudo ./svc.sh stop && sudo ./svc.sh uninstall
+./config.sh remove --token $REMOVE_TOKEN</code></pre>
+    </section>
+
+    <section>
+      <h2>6. Security Guardrails</h2>
+      <div class="callout">
+        <strong>Warning: Host Compromise Risk</strong>
+        Jobs on self-hosted runners execute with your local user privileges and environment access. Never run workflows triggered by untrusted public fork pull requests (<code>pull_request_target</code> or unvetted PRs). Restrict workflow triggers to repository members or manual dispatch.
+      </div>
+    </section>
+
+    <footer>
+      <div>Part of the <em>Local Antigravity Workflows</em> curriculum.</div>
+      <div><a href="../lessons/0001-install-and-register-runner.html">&larr; Return to Lesson 1</a></div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0001: Provisioning &amp; Registering Your Local Runner</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0001 &bull; Local Runner Setup</div>
+      <h1>Provisioning &amp; Registering Your Local Runner</h1>
+      <p class="subtitle">Connect your Linux workstation to GitHub Actions so workflows execute locally with authenticated Antigravity.</p>
+    </header>
+
+    <section>
+      <h2>The Mission Alignment</h2>
+      <p>By connecting your workstation as a self-hosted runner for <a href="https://github.com/Deepakeon/expensse-summary">Deepakeon/expensse-summary</a>, your GitHub workflows run directly on your hardware. This unlocks immediate benefits:</p>
+      <ul>
+        <li><strong>Credential reuse:</strong> The runner runs as your local Linux user, with instant access to your authenticated <code>agy</code> CLI and tokens.</li>
+        <li><strong>Bypass cloud API limits:</strong> Avoid GitHub-hosted Actions minute caps and cloud runner quotas.</li>
+        <li><strong>Native tooling:</strong> Local compilers, emulators, and local caches are immediately available to the workflow.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How the Runner Communicates</h2>
+      <p>A common misconception is that running workflows on a local machine requires opening ports in your home router or configuring port forwarding. In reality, the GitHub runner agent uses <strong>outbound long-polling over HTTPS (port 443)</strong>.</p>
+      <div class="callout">
+        <strong>Key Architectural Takeaway</strong>
+        Your runner initiates the connection to GitHub's message queue. GitHub never connects back directly to your local IP address. You do not need any firewall exceptions, dynamic DNS, or public IP configurations.
+      </div>
+    </section>
+
+    <section>
+      <h2>Hands-On: Provision Your Runner</h2>
+
+      <div class="step-card">
+        <div class="step-header">Step 1 &mdash; Prepare Directory &amp; Download Archive</div>
+        <p>Run these commands on your workstation to create an isolated directory outside the project repo and download runner v2.337.0:</p>
+        <pre><code>mkdir -p ~/actions-runner && cd ~/actions-runner
+curl -o actions-runner-linux-x64-2.337.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-x64-2.337.0.tar.gz
+echo "70920811a4f8ad4328818682bca5c6469c1c942fab52448868071d0063816613  actions-runner-linux-x64-2.337.0.tar.gz" | shasum -a 256 -c
+tar xzf ./actions-runner-linux-x64-2.337.0.tar.gz</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Step 2 &mdash; Generate Registration Token &amp; Configure</div>
+        <p>Using your authenticated <code>gh</code> CLI, fetch a temporary registration token and register the runner:</p>
+        <pre><code># Generate token
+TOKEN=$(gh api --method POST repos/Deepakeon/expensse-summary/actions/runners/registration-token --jq .token)
+
+# Register runner with default settings
+./config.sh --url https://github.com/Deepakeon/expensse-summary --token $TOKEN</code></pre>
+        <p>Press Enter to accept default runner name and work folder (<code>_work</code>).</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Step 3 &mdash; Start Interactive Listener</div>
+        <p>Start the runner process to confirm successful connection:</p>
+        <pre><code>./run.sh</code></pre>
+        <p>You should see <code>Listening for Jobs</code> in your terminal, and the runner will display as <strong>Idle / Online</strong> in your repo's <em>Settings &rarr; Actions &rarr; Runners</em>.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-1">
+        <h3 class="quiz-title">Quick Check: Network Architecture</h3>
+        <p>How does GitHub Actions dispatch workflow jobs to a self-hosted runner behind a home firewall or NAT router?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Local runner polls GitHub outbound</button>
+          <button class="quiz-option" type="button">GitHub server connects runner port</button>
+          <button class="quiz-option" type="button">Router port forwards incoming jobs</button>
+          <button class="quiz-option" type="button">Server pushes jobs directly inward</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary Source Reading</h2>
+      <p>Before proceeding to daemonizing as a system service, read the official reference documentation:</p>
+      <p>&rarr; <a href="https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners" target="_blank" rel="noopener">GitHub Docs: Adding self-hosted runners</a></p>
+    </section>
+
+    <section>
+      <h2>Next Steps &amp; Teacher Assistance</h2>
+      <p>Once your runner shows <code>Listening for Jobs</code>, in Lesson 0002 we will configure your agentic workflow (<code>bug-resolver.md</code>) to target <code>runs-on: self-hosted</code> and set up the runner as a background systemd daemon.</p>
+      <div class="callout">
+        <strong>Questions or Blockers?</strong>
+        Ask me any questions right here in the chat. As your teacher, I can diagnose terminal errors, verify token status, or guide you through next steps.
+      </div>
+    </section>
+
+    <footer>
+      <div><a href="../reference/runner-cheatsheet.html">&larr; Runner Cheat Sheet</a></div>
+      <div>Lesson 0001 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-1', 0, {
+        correct: 'The runner connects outward over HTTPS to GitHub long-poll endpoints. No inbound connections or port forwarding needed.',
+        incorrect: 'Incorrect. The self-hosted runner initiates outbound HTTPS long-polling to GitHub. Inbound traffic is never needed.'
+      });
+    });
+  </script>
+</body>
+</html>

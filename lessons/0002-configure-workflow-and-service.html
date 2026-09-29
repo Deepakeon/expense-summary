@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0002: Workflow Routing &amp; Matt Pocock Debugging Discipline</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0002 &bull; Execution &amp; Debugging Skills</div>
+      <h1>Workflow Routing &amp; Matt Pocock Debugging Discipline</h1>
+      <p class="subtitle">Directing jobs to your local runner with <code>runs-on: self-hosted</code> and enforcing systematic bug diagnosis.</p>
+    </header>
+
+    <section>
+      <h2>Runner Status: Registered</h2>
+      <p>Your runner is successfully registered with <strong>Deepakeon/expense-summary</strong> as <code>deepak-Lenovo-V15-G5-IRL</code> (ID: 2). The previous registration 404 was diagnosed and resolved: the repository slug was corrected from the typo <code>expensse-summary</code> to <code>expense-summary</code>.</p>
+    </section>
+
+    <section>
+      <h2>Step 1: Workflow Frontmatter Routing</h2>
+      <p>In <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/bug-resolver.md">.github/workflows/bug-resolver.md</a>, we added <code>runs-on: self-hosted</code> to the frontmatter:</p>
+      <pre><code>---
+name: Bug Resolver
+model: gemini-2.5-flash
+engine:
+  id: gemini
+  version: "0.43.0"
+
+runs-on: self-hosted
+
+skills:
+  - mattpocock/skills/diagnosing-bugs@c55ee46073ed923f86ce59a5eb3b6d895095d1b7
+  - mattpocock/skills/tdd@c55ee46073ed923f86ce59a5eb3b6d895095d1b7
+  - mattpocock/skills/triage@c55ee46073ed923f86ce59a5eb3b6d895095d1b7
+...
+---</code></pre>
+      <p>Compiling via <code>gh aw compile</code> routed the central <code>agent</code> job to your local machine, where it inherits your workstation's <code>agy</code> authentication.</p>
+    </section>
+
+    <section>
+      <h2>Step 2: The Matt Pocock Debugging Framework</h2>
+      <p>The workflow loads Matt Pocock's skills into the local agent. When an issue arrives, the agent executes this mandatory 5-phase loop:</p>
+
+      <div class="step-card">
+        <div class="step-header">Phase 1 &mdash; Build a Tight Red Feedback Loop</div>
+        <p>Before writing fixes or guessing causes, construct <strong>one single deterministic test command</strong> (e.g. <code>npm test -- -t "repro test"</code>) that predictably fails on the reported defect. If you cannot make it red, stop.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Phase 2 &mdash; Reproduce + Minimise</div>
+        <p>Shrink the reproduction to the absolute smallest scenario. Cut inputs, config, and unrelated files one by one until every remaining element is load-bearing.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Phase 3 &mdash; 3&ndash;5 Ranked Falsifiable Hypotheses</div>
+        <p>Generate multiple competing theories before testing any: <em>"If X is the cause, then changing Y will make the symptom disappear."</em> Never anchor on the first idea.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Phase 4 &mdash; Targeted Instrumentation</div>
+        <p>Insert temporary tagged logs prefixed with <code>[DEBUG-...]</code> to verify internal state. Never commit untagged console logs.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Phase 5 &mdash; TDD Fix &amp; Clean Verification</div>
+        <p>Write the minimal code change to turn the reproduction green. Clean up all debug harnesses, run full tests, and open the pull request.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Step 3: Background Runner Daemon</h2>
+      <p>To keep the runner listening in the background without keeping a terminal tab open, install the systemd service:</p>
+      <pre><code>cd ~/actions-runner
+sudo ./svc.sh install $USER
+sudo ./svc.sh start
+sudo ./svc.sh status</code></pre>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-2">
+        <h3 class="quiz-title">Quick Check: Matt Pocock's Discipline</h3>
+        <p>Under Matt Pocock's diagnosing-bugs discipline, what must exist before generating any bug hypotheses?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Deterministic automated failing test</button>
+          <button class="quiz-option" type="button">Documented production runtime report</button>
+          <button class="quiz-option" type="button">Detailed architectural system design</button>
+          <button class="quiz-option" type="button">Exhaustive application debug logging</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary Source Reading</h2>
+      <p>Study the skill specification directly on your workstation:</p>
+      <p>&rarr; <a href="file:///home/deepak/.gemini/skills/diagnosing-bugs/SKILL.md">Matt Pocock Diagnosing Bugs Skill</a></p>
+    </section>
+
+    <footer>
+      <div><a href="./0001-install-and-register-runner.html">&larr; Lesson 1</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0002 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-2', 0, {
+        correct: 'Phase 1 requires a tight, deterministic, red-capable command before any hypothesis generation can begin.',
+        incorrect: 'Incorrect. Phase 1 mandates a deterministic failing reproduction loop before hypothesising.'
+      });
+    });
+  </script>
+</body>
+</html>

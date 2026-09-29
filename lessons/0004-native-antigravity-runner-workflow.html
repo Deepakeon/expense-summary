@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0004: Running Antigravity Directly (Zero API Cost)</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0004 &bull; Architecture &amp; Cost Control</div>
+      <h1>Running Antigravity Directly (Zero API Cost)</h1>
+      <p class="subtitle">Bypassing gh-aw's Gemini CLI to execute your authenticated local Antigravity (<code>agy</code>) agent without token costs or rate limits.</p>
+    </header>
+
+    <section>
+      <h2>The Critical Difference: Gemini CLI vs. Antigravity CLI</h2>
+      <p>If you push <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/bug-resolver.md">bug-resolver.md</a> as compiled by <code>gh-aw</code>, <strong>Antigravity will NOT run</strong>. Instead:</p>
+      <ul>
+        <li><code>gh-aw</code> has <code>engine: { id: gemini }</code> hardcoded.</li>
+        <li>It installs <code>@google/gemini-cli@0.43.0</code> via npm and runs <code>gemini</code>.</li>
+        <li>It calls <code>generativelanguage.googleapis.com</code> using your <code>GEMINI_API_KEY</code> secret.</li>
+        <li><strong>Result:</strong> It consumes cloud API tokens and is vulnerable to Google Cloud rate limits.</li>
+      </ul>
+      <div class="callout">
+        <strong>The Solution</strong>
+        Because your runner is self-hosted on your machine, it has direct access to your authenticated <code>agy</code> CLI at <code>~/.local/bin/agy</code>. By calling <code>agy</code> directly in a native GitHub Action step, you bypass the cloud API completely and use your unlimited Antigravity session.
+      </div>
+    </section>
+
+    <section>
+      <h2>Native Antigravity Workflow Template</h2>
+      <p>Create a dedicated native workflow: <code>.github/workflows/antigravity-fix.yml</code>:</p>
+      <pre><code>name: Antigravity Fixer
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  antigravity-fix:
+    if: startsWith(github.event.comment.body, '/fix')
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Execute Antigravity Agent
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          # Add local bin to PATH where agy lives
+          export PATH="$HOME/.local/bin:$PATH"
+
+          # Execute Antigravity CLI with existing local authentication
+          agy --print "You are resolving issue #$ISSUE_NUMBER: $ISSUE_TITLE.
+          Details: $ISSUE_BODY
+          Instructions: $COMMENT_BODY
+
+          Strictly apply Matt Pocock's diagnosing-bugs and TDD disciplines:
+          1. Build a tight reproduction test in __tests__/ that fails on this defect.
+          2. Form falsifiable hypotheses and verify minimal fix.
+          3. Run 'npm test' to verify green.
+          4. Create a Git branch 'fix/issue-$ISSUE_NUMBER' and commit the solution."</code></pre>
+    </section>
+
+    <section>
+      <h2>Side-by-Side Comparison</h2>
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.92rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+            <th style="padding: 0.5rem;">Feature</th>
+            <th style="padding: 0.5rem;">gh-aw bug-resolver.md</th>
+            <th style="padding: 0.5rem; color: var(--accent-color);">Native agy Workflow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td style="padding: 0.5rem; font-weight: bold;">CLI Executed</td>
+            <td style="padding: 0.5rem;"><code>@google/gemini-cli</code></td>
+            <td style="padding: 0.5rem; font-weight: bold; color: var(--success-color);"><code>agy</code> (Antigravity)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td style="padding: 0.5rem; font-weight: bold;">Authentication</td>
+            <td style="padding: 0.5rem;"><code>GEMINI_API_KEY</code></td>
+            <td style="padding: 0.5rem; font-weight: bold; color: var(--success-color);">Local Antigravity Session</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td style="padding: 0.5rem; font-weight: bold;">Token Cost</td>
+            <td style="padding: 0.5rem; color: var(--error-color);">Paid API Tokens</td>
+            <td style="padding: 0.5rem; font-weight: bold; color: var(--success-color);">$0 (Zero API Token Cost)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td style="padding: 0.5rem; font-weight: bold;">Rate Limits</td>
+            <td style="padding: 0.5rem; color: var(--error-color);">Cloud API Quota</td>
+            <td style="padding: 0.5rem; font-weight: bold; color: var(--success-color);">Uncapped Local Execution</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-4">
+        <h3 class="quiz-title">Quick Check: Execution Engines</h3>
+        <p>Why did bug-resolver.md consume cloud API tokens instead of using your local Antigravity session?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Workflow invokes Gemini CLI binary</button>
+          <button class="quiz-option" type="button">Local daemon requires admin rights</button>
+          <button class="quiz-option" type="button">GitHub server blocks device tokens</button>
+          <button class="quiz-option" type="button">Runner process avoids system tools</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary Source Reading</h2>
+      <p>Read the Antigravity CLI guide on your machine:</p>
+      <p>&rarr; <a href="file:///home/deepak/.gemini/antigravity-cli/builtin/skills/antigravity_guide/SKILL.md">Google Antigravity CLI Guide</a></p>
+    </section>
+
+    <footer>
+      <div><a href="./0003-test-workflow-with-fix-slash-command.html">&larr; Lesson 3</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0004 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-4', 0, {
+        correct: 'Correct. gh-aw compiles engine: gemini into an npm install of @google/gemini-cli which queries the paid Gemini API using GEMINI_API_KEY.',
+        incorrect: 'Incorrect. bug-resolver.md explicitly configured engine: id: gemini, which runs @google/gemini-cli against Google Cloud APIs.'
+      });
+    });
+  </script>
+</body>
+</html>

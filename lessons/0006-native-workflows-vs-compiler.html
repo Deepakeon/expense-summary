@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0006: Native Workflows vs gh-aw Compiler</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0006 &bull; Workflow Architecture</div>
+      <h1>Native Workflows vs. gh-aw Compiler</h1>
+      <p class="subtitle">Why <code>gh aw compile</code> reported no files, and why your native YAML workflow needs no compilation.</p>
+    </header>
+
+    <section>
+      <h2>Why gh aw compile Showed an Error</h2>
+      <p>The error message:</p>
+      <pre><code>✗ no workflow markdown files found in .github/workflows</code></pre>
+      <p>This happens because <code>gh aw compile</code> only searches for Markdown workflows (<code>*.md</code>) that need to be transformed into Actions YAML (<code>*.lock.yml</code>).</p>
+      <div class="callout">
+        <strong>No Compilation Needed</strong>
+        <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/antigravity-fix.yml">antigravity-fix.yml</a> is a <strong>native GitHub Actions YAML file</strong>. GitHub Actions reads and executes <code>.yml</code> files natively. You do not need to run <code>gh aw compile</code>!
+      </div>
+    </section>
+
+    <section>
+      <h2>Next Step: Commit &amp; Push to GitHub</h2>
+      <p>Remove the old deleted files and push the native workflow to <code>main</code>:</p>
+      <pre><code>git add -A
+git commit -m "feat(ci): switch to native Antigravity runner workflow"
+git push origin main</code></pre>
+    </section>
+
+    <section>
+      <h2>Run &amp; Test</h2>
+      <ol>
+        <li>Start your runner listener in terminal:
+          <pre><code>cd ~/actions-runner && ./run.sh</code></pre>
+        </li>
+        <li>Comment <code>/fix</code> on any GitHub issue.</li>
+        <li>Your runner will pick up the job and execute <code>agy</code> directly with the <code>diagnosing-bugs</code> skill.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-6">
+        <h3 class="quiz-title">Quick Check: Workflow Execution</h3>
+        <p>Why is running gh aw compile unnecessary for antigravity-fix.yml?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">GitHub executes native YAML direct</button>
+          <button class="quiz-option" type="button">Runner compiles binaries on demand</button>
+          <button class="quiz-option" type="button">Server checks require valid tokens</button>
+          <button class="quiz-option" type="button">Daemon updates configs during boot</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary Source Reading</h2>
+      <p>GitHub Actions official workflow syntax documentation:</p>
+      <p>&rarr; <a href="https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions" target="_blank" rel="noopener">GitHub Docs: Workflow syntax for GitHub Actions</a></p>
+    </section>
+
+    <footer>
+      <div><a href="./0005-skill-expansion-and-cli-lifecycle.html">&larr; Lesson 5</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0006 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-6', 0, {
+        correct: 'Correct. GitHub Actions natively parses and runs .yml workflows directly. gh aw compile is only used for gh-aw markdown files.',
+        incorrect: 'Incorrect. antigravity-fix.yml is already standard Actions YAML and does not require any compilation.'
+      });
+    });
+  </script>
+</body>
+</html>

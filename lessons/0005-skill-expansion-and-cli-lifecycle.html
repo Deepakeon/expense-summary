@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0005: agy CLI Execution &amp; Diagnosing-Bugs Skill Activation</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0005 &bull; Skill Invocation &amp; Runtime</div>
+      <h1>agy Execution &amp; Diagnosing-Bugs Skill Activation</h1>
+      <p class="subtitle">How Antigravity activates <code>/diagnosing-bugs</code>, approves tool actions, and autonomously resolves issues.</p>
+    </header>
+
+    <section>
+      <h2>Does it invoke diagnosing-bugs? YES.</h2>
+      <p>In <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/antigravity-fix.yml">antigravity-fix.yml</a>, we configured the runner to execute:</p>
+      <pre><code>agy --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE..."</code></pre>
+      <p>Because we linked <code>~/.agents/skills/diagnosing-bugs</code> into <code>~/.gemini/config/skills/</code>, Antigravity CLI recognizes <code>/diagnosing-bugs</code> as an active slash command. When <code>agy</code> starts, it expands the full diagnosing-bugs runbook directly into the agent's instructions.</p>
+    </section>
+
+    <section>
+      <h2>What Happens Step-by-Step When You Comment /fix</h2>
+      <ol>
+        <li><strong>Webhook Arrival:</strong> GitHub dispatches an <code>issue_comment</code> event to your runner.</li>
+        <li><strong>Job Acquisition:</strong> Your local runner daemon (<code>~/actions-runner</code>) picks up the <code>antigravity-fix</code> job via outbound HTTPS poll.</li>
+        <li><strong>Repo Preparation:</strong> Runner checks out your code and sets up Node 22.</li>
+        <li><strong>CLI Launch:</strong> Runner executes <code>agy --dangerously-skip-permissions --print "/diagnosing-bugs ..."</code> as your local Linux user.</li>
+        <li><strong>Diagnosis Loop (Matt Pocock):</strong>
+          <ul>
+            <li><strong>Phase 1 (Red Feedback Loop):</strong> The agent reads your code and writes an automated reproduction unit test in <code>__tests__/</code> that fails predictably on the bug.</li>
+            <li><strong>Phase 2 (Minimise):</strong> Strips down inputs to the absolute minimum required to reproduce.</li>
+            <li><strong>Phase 3 (Hypotheses):</strong> Formulates 3&ndash;5 falsifiable hypotheses.</li>
+            <li><strong>Phase 4 (Instrument):</strong> Adds temporary debug probes if necessary.</li>
+            <li><strong>Phase 5 (TDD Fix):</strong> Applies minimal code changes in <code>src/</code> and runs <code>npm test</code> until all unit tests pass green.</li>
+          </ul>
+        </li>
+        <li><strong>Auto-Approval:</strong> The <code>--dangerously-skip-permissions</code> flag automatically approves file modifications and test commands, ensuring non-interactive completion.</li>
+        <li><strong>Git Branch &amp; PR:</strong> The agent commits the solution, pushes <code>fix/issue-&lt;number&gt;</code>, and completes the workflow.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-5">
+        <h3 class="quiz-title">Quick Check: Unattended CI Execution</h3>
+        <p>What flag allows agy to edit files and run tests autonomously without interactive prompts in GitHub Actions?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Use dangerously-skip-permissions flags</button>
+          <button class="quiz-option" type="button">Unattended automated containerization</button>
+          <button class="quiz-option" type="button">Universal background instrumentation</button>
+          <button class="quiz-option" type="button">Permanent unrestricted synchronization</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary Source Reading</h2>
+      <p>Review the Antigravity customization discovery rules on your local system:</p>
+      <p>&rarr; <a href="file:///home/deepak/.gemini/antigravity-cli/builtin/skills/agy-customizations/SKILL.md">Antigravity Customization System Guide</a></p>
+    </section>
+
+    <footer>
+      <div><a href="./0004-native-antigravity-runner-workflow.html">&larr; Lesson 4</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0005 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-5', 0, {
+        correct: 'Correct. --dangerously-skip-permissions auto-approves all tool actions (file edits, bash execution) so agy runs unattended in CI.',
+        incorrect: 'Incorrect. The --dangerously-skip-permissions flag is required to bypass interactive permission prompts in non-interactive CI execution.'
+      });
+    });
+  </script>
+</body>
+</html>

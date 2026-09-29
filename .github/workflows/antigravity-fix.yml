@@ -1,0 +1,43 @@
+name: Antigravity Bug Resolver
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  antigravity-fix:
+    if: startsWith(github.event.comment.body, '/fix')
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Antigravity Agent
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+
+          # Invoke agy with /diagnosing-bugs slash command and skip permission prompts
+          agy --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
+          Details: $ISSUE_BODY
+          Instructions: $COMMENT_BODY
+
+          Repository: expenseSummary
+          Create branch 'fix/issue-$ISSUE_NUMBER', commit changes, and push."
