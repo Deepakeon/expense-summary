@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0009: Structured PR Body with Root Cause &amp; Solution</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0009 &bull; Quality &amp; Documentation</div>
+      <h1>Structured PR Body: Issue Link, Root Cause &amp; Fix</h1>
+      <p class="subtitle">Ensuring every pull request explains why the issue occurred, how it was resolved, and automatically links the ticket.</p>
+    </header>
+
+    <section>
+      <h2>PR Format Requirements</h2>
+      <p>A professional pull request created by an agentic runner must answer three questions:</p>
+      <ol>
+        <li><strong>Issue Link:</strong> Starts with <code>Closes #&lt;id&gt;</code> to link the PR and automatically close the issue on merge.</li>
+        <li><strong>Why Was It Happening (Root Cause):</strong> Matt Pocock diagnosis explaining why the defect occurred in production.</li>
+        <li><strong>What Was the Fix (Solution &amp; Verification):</strong> The exact code changes made and the regression tests in <code>__tests__/</code> verifying it.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Live Example: PR #4</h2>
+      <p>Review the updated pull request demonstrating this structure:</p>
+      <p>&rarr; <a href="https://github.com/Deepakeon/expense-summary/pull/4" target="_blank" rel="noopener"><strong>PR #4 on GitHub</strong></a></p>
+      <pre><code>Closes #1
+
+## Why Was It Happening (Root Cause)
+1. SMS Sender Matching Failure: Indian telecom operators prepend circle prefixes (VM-, VK-, AD-) and append service suffixes (-S, -T) to sender headers. matchesSender did not normalize bidirectionally.
+2. Native Module Discovery: SmsReaderModule.kt lacked @ReactModule for New Architecture discovery.
+
+## What Was the Fix (Solution &amp; Verification)
+1. Added normalizeSender in TypeScript and Kotlin to strip prefixes/suffixes.
+2. Added @ReactModule annotation and dynamic native module resolution.
+3. Added unit tests in __tests__/syncService.test.ts; all pass green with npm test.</code></pre>
+    </section>
+
+    <section>
+      <h2>Automated Workflow Generation</h2>
+      <p>In <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/antigravity-fix.yml">antigravity-fix.yml</a>, the agent is instructed to write <code>pr-summary.md</code>. The workflow then injects this into <code>gh pr create</code>:</p>
+      <pre><code>PR_BODY=$(printf "Closes #%s\n\n%s" "$ISSUE_NUMBER" "$(cat pr-summary.md)")
+gh pr create --body "$PR_BODY" ...</code></pre>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-9">
+        <h3 class="quiz-title">Quick Check: Issue Linking</h3>
+        <p>What mechanism automatically links and closes the issue when the PR merges?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Using closes issue reference</button>
+          <button class="quiz-option" type="button">Using commits branch updater</button>
+          <button class="quiz-option" type="button">Using default review targets</button>
+          <button class="quiz-option" type="button">Using project workflow rules</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Next Steps</h2>
+      <p>Push the updated workflow file to <code>main</code>:</p>
+      <pre><code>git add .github/workflows/antigravity-fix.yml
+git commit -m "feat(ci): enforce structured PR body with root cause and fix"
+git push origin main</code></pre>
+    </section>
+
+    <footer>
+      <div><a href="./0008-agent-log-capture-and-summaries.html">&larr; Lesson 8</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0009 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-9', 0, {
+        correct: 'Correct. Using "Closes #<id>" or "Fixes #<id>" in the PR body automatically links the PR to the issue and closes it upon merge.',
+        incorrect: 'Incorrect. GitHub specifically recognizes keywords like "Closes #<id>" or "Fixes #<id>" to link and close issues upon merging.'
+      });
+    });
+  </script>
+</body>
+</html>

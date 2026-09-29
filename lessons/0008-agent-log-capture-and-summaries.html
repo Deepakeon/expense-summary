@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0008: Comprehensive Agent Log Capture &amp; Step Summaries</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0008 &bull; Observability &amp; Logging</div>
+      <h1>Comprehensive Agent Log Capture</h1>
+      <p class="subtitle">Publishing formatted agent execution logs to GitHub Actions Step Summaries, artifacts, and issue comments.</p>
+    </header>
+
+    <section>
+      <h2>The Three Visibility Channels</h2>
+      <p>In <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/antigravity-fix.yml">antigravity-fix.yml</a>, all output from <code>agy</code> is now captured through three separate channels:</p>
+
+      <div class="step-card">
+        <div class="step-header">1. GitHub Actions Step Summary (Web UI Overview)</div>
+        <p>Using <code>tee agent-output.log</code> and writing to <code>$GITHUB_STEP_SUMMARY</code>, the entire agent diagnosis report renders directly on the run overview page in an expandable dropdown:</p>
+        <pre><code>echo "## 🤖 Antigravity Agent Execution Report" &gt;&gt; $GITHUB_STEP_SUMMARY
+echo "&lt;details&gt;&lt;summary&gt;Click to view complete agent execution output&lt;/summary&gt;" &gt;&gt; $GITHUB_STEP_SUMMARY
+cat agent-output.log &gt;&gt; $GITHUB_STEP_SUMMARY
+echo "&lt;/details&gt;" &gt;&gt; $GITHUB_STEP_SUMMARY</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">2. Downloadable Workflow Artifact</div>
+        <p>The raw log is uploaded via <code>actions/upload-artifact@v4</code> with <code>if: always()</code> so you can download the full text log even if a step encounters errors:</p>
+        <pre><code>- name: Upload Agent Execution Logs
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: antigravity-logs-issue-${{ github.event.issue.number }}
+    path: agent-output.log</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">3. Automated Issue Comment</div>
+        <p>When the agent finishes and pushes the fix branch, it comments directly on the triggering issue with the PR link:</p>
+        <pre><code>gh issue comment "$ISSUE_NUMBER" --body "🤖 **Antigravity Runner** opened pull request $PR_URL. Check Actions Step Summary for full test and diagnosis logs."</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-8">
+        <h3 class="quiz-title">Quick Check: Log Visibility</h3>
+        <p>Where does writing to GITHUB_STEP_SUMMARY display the agent's output on GitHub?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Direct on Actions overview page</button>
+          <button class="quiz-option" type="button">Inside default branch pull diff</button>
+          <button class="quiz-option" type="button">Across private commit hash logs</button>
+          <button class="quiz-option" type="button">Within user account profile tab</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Update &amp; Push Workflow</h2>
+      <p>Push the logging enhancements to <code>main</code>:</p>
+      <pre><code>git add .github/workflows/antigravity-fix.yml
+git commit -m "feat(ci): add step summary, artifact upload, and issue notification"
+git push origin main</code></pre>
+    </section>
+
+    <footer>
+      <div><a href="./0007-automated-pr-creation.html">&larr; Lesson 7</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0008 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-8', 0, {
+        correct: 'Correct. Output written to $GITHUB_STEP_SUMMARY renders as formatted Markdown directly on the GitHub Actions run summary page.',
+        incorrect: 'Incorrect. $GITHUB_STEP_SUMMARY renders Markdown directly on the Actions run summary page.'
+      });
+    });
+  </script>
+</body>
+</html>

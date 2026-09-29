@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0007: Automated Pull Request Creation</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0007 &bull; Workflow Verification</div>
+      <h1>Automated Pull Request Creation</h1>
+      <p class="subtitle">Your runner successfully diagnosed and pushed the fix branch; now automate the GitHub PR creation step.</p>
+    </header>
+
+    <section>
+      <h2>What Actually Happened in Your Run</h2>
+      <p>Your runner job completed with <strong>Succeeded</strong> because Antigravity (<code>agy</code>) did its job:</p>
+      <ul>
+        <li>It read Issue #1 and applied Matt Pocock's <code>diagnosing-bugs</code> loop.</li>
+        <li>It implemented the fix and verified the test suite passed.</li>
+        <li>It created a new Git branch: <code>fix/issue-1</code>.</li>
+        <li>It committed the changes (<code>2af16e1</code>) and pushed them to GitHub (<code>origin/fix/issue-1</code>).</li>
+      </ul>
+      <div class="callout">
+        <strong>Why No PR Was Visible</strong>
+        The prompt instructed <code>agy</code> to <em>"commit changes, and push"</em>. It did not invoke <code>gh pr create</code>. The branch was pushed to GitHub, but the PR had not been opened yet.
+      </div>
+    </section>
+
+    <section>
+      <h2>Pull Request Opened</h2>
+      <p>We opened the PR for your completed fix branch:</p>
+      <p>&rarr; <a href="https://github.com/Deepakeon/expense-summary/pull/4" target="_blank" rel="noopener"><strong>PR #4: fix(sync): resolve issue #1 batch sync sender matching</strong></a></p>
+    </section>
+
+    <section>
+      <h2>Automating PR Creation in Future Runs</h2>
+      <p>In <a href="file:///home/deepak/Documents/expenseSummary/.github/workflows/antigravity-fix.yml">antigravity-fix.yml</a>, we added an automated step that runs immediately after <code>agy</code> finishes:</p>
+      <pre><code>      - name: Open Pull Request
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          BRANCH="fix/issue-$ISSUE_NUMBER"
+          if git ls-remote --exit-code --heads origin "$BRANCH"; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "fix: resolve issue #$ISSUE_NUMBER ($ISSUE_TITLE)" \
+              --body "Fixes #$ISSUE_NUMBER. Diagnosed and resolved by local Antigravity runner using Matt Pocock's diagnosing-bugs discipline." || echo "PR already open"
+          fi</code></pre>
+      <p>Now, whenever you comment <code>/fix</code>, the runner will resolve the bug, push the branch, and automatically open the PR.</p>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-7">
+        <h3 class="quiz-title">Quick Check: PR Automation</h3>
+        <p>Why was no pull request visible on GitHub after the runner finished successfully?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Branch pushed without calling PR</button>
+          <button class="quiz-option" type="button">Runner token lacked write rights</button>
+          <button class="quiz-option" type="button">GitHub Actions blocked pull sync</button>
+          <button class="quiz-option" type="button">Test suites reported fatal crash</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Next Steps</h2>
+      <p>Push the updated workflow file to <code>main</code>:</p>
+      <pre><code>git add .github/workflows/antigravity-fix.yml
+git commit -m "feat(ci): add automated PR creation step to antigravity runner"
+git push origin main</code></pre>
+    </section>
+
+    <footer>
+      <div><a href="./0006-native-workflows-vs-compiler.html">&larr; Lesson 6</a> &bull; <a href="../reference/runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+      <div>Lesson 0007 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-7', 0, {
+        correct: 'Correct. The agent successfully committed and pushed the fix branch, but gh pr create had not been called to open the PR.',
+        incorrect: 'Incorrect. The branch was pushed successfully, but no PR creation step was invoked.'
+      });
+    });
+  </script>
+</body>
+</html>

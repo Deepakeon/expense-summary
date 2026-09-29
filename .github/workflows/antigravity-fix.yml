@@ -34,10 +34,61 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
 
-          # Invoke agy with /diagnosing-bugs slash command and skip permission prompts
+          # Invoke agy with /diagnosing-bugs slash command and capture full output
           agy --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
           Details: $ISSUE_BODY
           Instructions: $COMMENT_BODY
 
           Repository: expenseSummary
-          Create branch 'fix/issue-$ISSUE_NUMBER', commit changes, and push."
+          Tasks:
+          1. Write a file named 'pr-summary.md' with:
+             ## Why Was It Happening (Root Cause)
+             <Explain the defect, why it occurred, and what went wrong>
+
+             ## What Was the Fix (Solution & Verification)
+             <Summarize code changes and unit tests added in __tests__/>
+          2. Create branch 'fix/issue-$ISSUE_NUMBER', commit all changes, and push." 2>&1 | tee agent-output.log
+
+          # Append formatted log to GitHub Actions Step Summary
+          echo "## 🤖 Antigravity Agent Execution Report" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>Click to view complete agent execution output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```markdown' >> $GITHUB_STEP_SUMMARY
+          cat agent-output.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Agent Execution Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: antigravity-logs-issue-${{ github.event.issue.number }}
+          path: agent-output.log
+          retention-days: 7
+
+      - name: Open Pull Request & Notify Issue
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          BRANCH="fix/issue-$ISSUE_NUMBER"
+          if git ls-remote --exit-code --heads origin "$BRANCH"; then
+            if [ -f "pr-summary.md" ]; then
+              SUMMARY_CONTENT=$(cat pr-summary.md)
+            else
+              SUMMARY_CONTENT="### Diagnosis & Fix\nResolved by local Antigravity runner using Matt Pocock diagnosing-bugs discipline."
+            fi
+
+            PR_BODY=$(printf "Closes #%s\n\n%s" "$ISSUE_NUMBER" "$SUMMARY_CONTENT")
+
+            PR_URL=$(gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "fix: resolve issue #$ISSUE_NUMBER ($ISSUE_TITLE)" \
+              --body "$PR_BODY" || echo "")
+            if [ -n "$PR_URL" ]; then
+              gh issue comment "$ISSUE_NUMBER" --body "🤖 **Antigravity Runner** opened pull request $PR_URL with diagnosis and fix details."
+            fi
+          fi
