@@ -31,34 +31,50 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_NO_UPDATE_NOTIFIER: "1"
           LOKI_URL: "http://localhost:3100/loki/api/v1/push"
         run: |
-          export PATH="$HOME/.local/bin:$PATH"
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
 
-          # Invoke agy with stream-json and pipe through loki_forwarder.py
-          agy --output-format stream-json --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
+          echo "=== 👤 User Message ==="
+          echo "Issue #$ISSUE_NUMBER: $ISSUE_TITLE"
+          echo "Comment: $COMMENT_BODY"
+          echo "========================"
+
+          # Invoke agy with stream-json, low reasoning effort, and pipe through loki_forwarder.py
+          agy --effort low --output-format stream-json --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
           Details: $ISSUE_BODY
           Instructions: $COMMENT_BODY
 
           Repository: expenseSummary
           Tasks:
-          1. Write a file named 'pr-summary.md' with:
-             ## Why Was It Happening (Root Cause)
-             <Explain the defect, why it occurred, and what went wrong>
-
-             ## What Was the Fix (Solution & Verification)
-             <Summarize code changes and unit tests added in __tests__/>
-          2. Create branch 'fix/issue-$ISSUE_NUMBER', commit all changes, and push." \
+          1. Create branch 'fix/issue-$ISSUE_NUMBER', commit all changes, and push.
+          2. Open a pull request against main using 'gh pr create' with a good summary in the description of the PR:
+             - Closes #$ISSUE_NUMBER
+             - Root Cause: Why it was happening
+             - Fix & Verification: Code changes and tests added to verify the fix." \
           | python3 scripts/observability/loki_forwarder.py 2>&1 | tee agent-output.log
 
           # Append formatted log to GitHub Actions Step Summary
           echo "## 🤖 Antigravity Agent Execution Report" >> $GITHUB_STEP_SUMMARY
-          echo "<details><summary>Click to view complete agent execution output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo '```markdown' >> $GITHUB_STEP_SUMMARY
-          cat agent-output.log >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
+          echo "### 💬 User Message" >> $GITHUB_STEP_SUMMARY
+          echo "**Issue #$ISSUE_NUMBER:** $ISSUE_TITLE" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -n "$COMMENT_BODY" ]; then
+            echo "**Comment:**" >> $GITHUB_STEP_SUMMARY
+            echo "> $COMMENT_BODY" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "### 🧠 AI Response" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -s agent-output.log ]; then
+            cat agent-output.log >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No output recorded." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Agent Execution Logs
         if: always()
@@ -72,25 +88,38 @@ jobs:
         if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_NO_UPDATE_NOTIFIER: "1"
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
           BRANCH="fix/issue-$ISSUE_NUMBER"
           if git ls-remote --exit-code --heads origin "$BRANCH"; then
-            if [ -f "pr-summary.md" ]; then
-              SUMMARY_CONTENT=$(cat pr-summary.md)
-            else
-              SUMMARY_CONTENT="### Diagnosis & Fix\nResolved by local Antigravity runner using Matt Pocock diagnosing-bugs discipline."
+            PR_URL=$(gh pr list --head "$BRANCH" --json url --jq '.[0].url' 2>/dev/null || echo "")
+
+            if [ -z "$PR_URL" ]; then
+              if [ -s agent-output.log ]; then
+                SUMMARY_CONTENT=$(cat agent-output.log)
+              else
+                SUMMARY_CONTENT="Resolved issue #$ISSUE_NUMBER using Antigravity runner."
+              fi
+
+              PR_BODY=$(printf "Closes #%s\n\n## Summary\n\n%s" "$ISSUE_NUMBER" "$SUMMARY_CONTENT")
+
+              PR_URL=$(printf "%s" "$PR_BODY" | gh pr create \
+                --base main \
+                --head "$BRANCH" \
+                --title "fix: resolve issue #$ISSUE_NUMBER ($ISSUE_TITLE)" \
+                --body-file - || echo "")
             fi
 
-            PR_BODY=$(printf "Closes #%s\n\n%s" "$ISSUE_NUMBER" "$SUMMARY_CONTENT")
-
-            PR_URL=$(gh pr create \
-              --base main \
-              --head "$BRANCH" \
-              --title "fix: resolve issue #$ISSUE_NUMBER ($ISSUE_TITLE)" \
-              --body "$PR_BODY" || echo "")
             if [ -n "$PR_URL" ]; then
-              gh issue comment "$ISSUE_NUMBER" --body "🤖 **Antigravity Runner** opened pull request $PR_URL with diagnosis and fix details."
+              AI_RESPONSE=$(cat agent-output.log 2>/dev/null || echo "")
+              if [ -n "$AI_RESPONSE" ]; then
+                COMMENT_TEXT=$(printf "🤖 **Antigravity Runner** opened pull request %s\n\n### AI Response:\n%s" "$PR_URL" "$AI_RESPONSE")
+              else
+                COMMENT_TEXT="🤖 **Antigravity Runner** opened pull request $PR_URL with diagnosis and fix details."
+              fi
+              printf "%s" "$COMMENT_TEXT" | gh issue comment "$ISSUE_NUMBER" --body-file -
             fi
           fi
