@@ -31,11 +31,12 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOKI_URL: "http://localhost:3100/loki/api/v1/push"
         run: |
           export PATH="$HOME/.local/bin:$PATH"
 
-          # Invoke agy with /diagnosing-bugs slash command and capture full output
-          agy --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
+          # Invoke agy with stream-json and pipe through loki_forwarder.py
+          agy --output-format stream-json --dangerously-skip-permissions --print "/diagnosing-bugs Resolve issue #$ISSUE_NUMBER: $ISSUE_TITLE.
           Details: $ISSUE_BODY
           Instructions: $COMMENT_BODY
 
@@ -47,7 +48,8 @@ jobs:
 
              ## What Was the Fix (Solution & Verification)
              <Summarize code changes and unit tests added in __tests__/>
-          2. Create branch 'fix/issue-$ISSUE_NUMBER', commit all changes, and push." 2>&1 | tee agent-output.log
+          2. Create branch 'fix/issue-$ISSUE_NUMBER', commit all changes, and push." \
+          | python3 scripts/observability/loki_forwarder.py 2>&1 | tee agent-output.log
 
           # Append formatted log to GitHub Actions Step Summary
           echo "## 🤖 Antigravity Agent Execution Report" >> $GITHUB_STEP_SUMMARY
