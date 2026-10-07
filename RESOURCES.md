@@ -12,6 +12,10 @@
   Crucial security guidelines regarding public fork pull requests and host machine protection. Use for: safety guardrails and label scoping.
 - [GitHub Agentic Workflows (`gh-aw`) Repository](https://github.com/github/gh-aw)
   Compiler CLI and specification for Markdown-driven GitHub agentic workflows. Use for: frontmatter configuration, `runs-on` targeting, and lockfile compilation.
+- [Arize Phoenix Documentation](https://docs.arize.com/phoenix)
+  Open-source AI observability platform with native OpenTelemetry & OpenInference support for tracing AI agents, tool calls, and LLM evaluations. Use for: agent telemetry dashboards and flame graphs.
+- [OpenInference Semantic Conventions](https://github.com/Arize-ai/openinference)
+  Specification standardizing trace attributes for AI agents (`openinference.span.kind = TOOL / LLM / AGENT`). Use for: telemetry schema design.
 
 ## Wisdom (Communities)
 

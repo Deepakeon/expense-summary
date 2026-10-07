@@ -9,6 +9,7 @@ Run GitHub Actions agentic workflows directly on the local Linux workstation whe
 - Workflow definitions (`bug-resolver.md`) configured with `runs-on: self-hosted` and compiled cleanly via `gh aw compile`.
 - Workflows triggered from GitHub execute locally on the workstation with access to the local environment and Antigravity tooling.
 - Matt Pocock's `diagnosing-bugs`, `tdd`, and `triage` skills strictly applied by the local runner agent for all issue debugging.
+- Real-time observability dashboard (Arize Phoenix) monitoring all runner tool calls, token usage, latency, and agent traces.
 
 ## Constraints
 - Linux x86_64 host environment.

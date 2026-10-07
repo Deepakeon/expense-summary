@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference: Agentic Observability Cheat Sheet</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Reference Document &bull; Observability &amp; Telemetry</div>
+      <h1>Agentic Observability Cheat Sheet</h1>
+      <p class="subtitle">Quick reference for Antigravity streaming telemetry, Arize Phoenix, and OpenTelemetry schemas.</p>
+    </header>
+
+    <section>
+      <h2>1. The 3-Tier Architecture</h2>
+      <pre><code>[ agy CLI (--output-format stream-json) ]
+         &darr; (NDJSON pipe)
+[ Python OTel Forwarder (scripts/observability/telemetry_forwarder.py) ]
+         &darr; (HTTP OTLP POST http://localhost:6006/v1/traces)
+[ Arize Phoenix Dashboard (Docker container on port 6006) ]</code></pre>
+    </section>
+
+    <section>
+      <h2>2. Arize Phoenix Commands</h2>
+      <div class="step-card">
+        <div class="step-header">Start Local Dashboard (Port 6006)</div>
+        <pre><code>docker run -d --name phoenix -p 6006:6006 --restart unless-stopped arize/phoenix:latest</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">Verify &amp; Open Dashboard</div>
+        <pre><code># Check daemon container
+docker ps --filter "name=phoenix"
+
+# Web UI URL
+http://localhost:6006</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">OTel Ingestion Endpoint</div>
+        <pre><code># OTLP HTTP Traces URL:
+http://localhost:6006/v1/traces</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Antigravity CLI Telemetry Command</h2>
+      <pre><code>agy --output-format stream-json --dangerously-skip-permissions --print "Your prompt here" \
+  | python3 scripts/observability/telemetry_forwarder.py 2>&amp;1 | tee agent-output.log</code></pre>
+    </section>
+
+    <section>
+      <h2>4. Stream JSON Event Types</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Type</th>
+            <th>State</th>
+            <th>Key Payload Fields</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>init</code></td>
+            <td>Session</td>
+            <td>-</td>
+            <td><code>conversation_id</code>, <code>tools</code> list, <code>cwd</code></td>
+          </tr>
+          <tr>
+            <td><code>step_update</code></td>
+            <td><code>agent_response</code></td>
+            <td><code>DONE</code></td>
+            <td><code>duration_seconds</code>, <code>usage.input_tokens</code>, <code>usage.output_tokens</code></td>
+          </tr>
+          <tr>
+            <td><code>step_update</code></td>
+            <td><code>tool</code></td>
+            <td><code>ACTIVE</code></td>
+            <td><code>tool_name</code>, <code>tool_info.parameters</code> (args)</td>
+          </tr>
+          <tr>
+            <td><code>step_update</code></td>
+            <td><code>tool</code></td>
+            <td><code>DONE</code></td>
+            <td><code>duration_seconds</code>, <code>tool_info.output</code></td>
+          </tr>
+          <tr>
+            <td><code>result</code></td>
+            <td>Turn Result</td>
+            <td>-</td>
+            <td><code>status</code>, <code>duration_seconds</code>, <code>usage.total_tokens</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. OpenInference Span Kinds</h2>
+      <p>Phoenix categorizes operations using the <code>openinference.span.kind</code> attribute:</p>
+      <ul>
+        <li><code>AGENT</code>: Top-level conversation or task execution.</li>
+        <li><code>LLM</code>: Model generation steps, token counts, and latency.</li>
+        <li><code>TOOL</code>: Tool calls (e.g. <code>run_command</code>, <code>view_file</code>, MCP tools).</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div>Part of the <em>Local Antigravity Workflows</em> curriculum.</div>
+      <div><a href="../lessons/0010-agentic-observability-and-dashboards.html">&larr; Return to Lesson 10</a> &bull; <a href="./runner-cheatsheet.html">Runner Cheat Sheet</a></div>
+    </footer>
+  </div>
+</body>
+</html>

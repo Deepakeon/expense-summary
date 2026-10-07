@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0010: Agentic Observability &amp; Dashboards</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/quiz.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lesson-meta">Lesson 0010 &bull; Telemetry &amp; Monitoring</div>
+      <h1>Agentic Observability: Turning the Black Box into a Dashboard</h1>
+      <p class="subtitle">How to monitor every tool call, MCP execution, and token count using live stream events and Arize Phoenix.</p>
+    </header>
+
+    <section>
+      <h2>The Problem: The Autonomous Black Box</h2>
+      <p>When our self-hosted runner executes <code>agy --print "..."</code>, the terminal only shows final markdown or scrolling text. If the agent runs five shell commands and hangs on the sixth, standard logs leave crucial questions unanswered:</p>
+      <ul>
+        <li><strong>Which tool slowed down?</strong> Did <code>npm test</code> take 40 seconds, or did an MCP call stall?</li>
+        <li><strong>What parameters were passed?</strong> Exactly what command line flags or file paths were executed?</li>
+        <li><strong>What was the output?</strong> Did a tool fail silently with an exit code error?</li>
+        <li><strong>Where went the tokens?</strong> How many tokens were spent on reasoning versus prompt context?</li>
+      </ul>
+      <p><strong>Observability</strong> replaces guesswork with a flight recorder: an interactive dashboard displaying an end-to-end timeline of every action your agent takes.</p>
+    </section>
+
+    <section>
+      <h2>The Architecture: 3 Moving Parts</h2>
+      <p>We connect the Antigravity runner to a visual dashboard via three lightweight components:</p>
+      <ol>
+        <li>
+          <strong>The Emitter (<code>agy --output-format stream-json</code>):</strong>
+          Instead of plain text, the CLI emits structured JSON events line-by-line in real time as actions occur.
+        </li>
+        <li>
+          <strong>The Forwarder (<code>telemetry_forwarder.py</code>):</strong>
+          A lightweight Python script that reads the stream and translates tool start/finish events into OpenTelemetry spans.
+        </li>
+        <li>
+          <strong>The Dashboard (<a href="https://docs.arize.com/phoenix" target="_blank" rel="noopener">Arize Phoenix</a>):</strong>
+          An open-source, self-hosted container running on <code>http://localhost:6006</code> that graphs nested tool spans, latencies, and token burn.
+        </li>
+      </ol>
+      <pre><code>agy --output-format stream-json ... \
+  | python3 scripts/observability/telemetry_forwarder.py \
+  | tee agent-output.log &rarr; sends OTLP spans to http://localhost:6006/v1/traces</code></pre>
+    </section>
+
+    <section>
+      <h2>How a Tool Call Becomes a Visual Span</h2>
+      <p>In <code>stream-json</code>, every tool execution produces two distinct events:</p>
+      <div class="step-card">
+        <div class="step-header">1. Tool Starts (State: ACTIVE)</div>
+        <p>The forwarder opens a new OpenTelemetry span named <code>tool_run_command</code> and records the input arguments:</p>
+        <pre><code>{"event":"step_update","step_update":{"step_index":2,"state":"ACTIVE","step_type":"tool","tool_name":"run_command","tool_info":{"parameters":{"CommandLine":"npm test"}}}}</code></pre>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">2. Tool Finishes (State: DONE)</div>
+        <p>The forwarder closes the span, attaching exact duration and tool output:</p>
+        <pre><code>{"event":"step_update","step_update":{"step_index":2,"state":"DONE","step_type":"tool","tool_name":"run_command","duration_seconds":3.42,"tool_info":{"output":"PASS __tests__/sync.test.ts"}}}</code></pre>
+      </div>
+      <p>Phoenix visualizes these spans as a nested flame graph: the root agent task sits at the top, branching downward into individual LLM thinking turns and tool calls.</p>
+    </section>
+
+    <section>
+      <h2>Quick Win: Start Phoenix Locally</h2>
+      <p>You can spin up Phoenix right now on your machine with one Docker command:</p>
+      <pre><code>docker run -d --name phoenix -p 6006:6006 --restart unless-stopped arize/phoenix:latest</code></pre>
+      <p>Once running, open <a href="http://localhost:6006" target="_blank" rel="noopener"><strong>http://localhost:6006</strong></a> in your browser to view your live traces dashboard.</p>
+    </section>
+
+    <section>
+      <h2>Knowledge Retrieval Check</h2>
+      <div class="quiz-container" id="quiz-10">
+        <h3 class="quiz-title">Concept Check: Telemetry Pipeline</h3>
+        <p>Why pipe stream-json instead of parsing logs after the agent finishes?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button">Streams live per-tool duration events</button>
+          <button class="quiz-option" type="button">Avoids writing any file artifacts</button>
+          <button class="quiz-option" type="button">Bypasses all runner token limits</button>
+          <button class="quiz-option" type="button">Replaces local docker container daemon</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Recommended Primary Source</h2>
+      <p>Read the official documentation on agent tracing:</p>
+      <p>&rarr; <a href="https://docs.arize.com/phoenix/tracing/how-to-trace/trace-agents" target="_blank" rel="noopener"><strong>Arize Phoenix: Tracing AI Agents with OpenInference</strong></a></p>
+    </section>
+
+    <section>
+      <h2>Ask Your Teacher</h2>
+      <p>Have questions about how MCP tools show up in Phoenix, or how to wire the forwarder into your workflow? Ask follow-up questions right here in the chat anytime!</p>
+    </section>
+
+    <footer>
+      <div><a href="./0009-structured-pull-request-body.html">&larr; Lesson 9</a> &bull; <a href="../reference/observability-cheatsheet.html">Observability Cheat Sheet</a></div>
+      <div>Lesson 0010 &bull; Status: Active</div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupQuiz('quiz-10', 0, {
+        correct: 'Correct. Streaming JSON provides live start/stop events with exact duration_seconds and tool inputs without waiting for the full job to finish.',
+        incorrect: 'Incorrect. The key advantage is getting granular, millisecond-accurate start and finish events for each tool step in real time.'
+      });
+    });
+  </script>
+</body>
+</html>
