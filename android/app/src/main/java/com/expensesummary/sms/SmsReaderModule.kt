@@ -12,9 +12,11 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
+import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.modules.core.PermissionAwareActivity
 import com.facebook.react.modules.core.PermissionListener
 
+@ReactModule(name = SmsReaderModule.NAME)
 class SmsReaderModule(private val reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext), PermissionListener {
 
@@ -48,7 +50,7 @@ class SmsReaderModule(private val reactContext: ReactApplicationContext) :
         return
       }
 
-      val activity = currentActivity
+      val activity = reactContext.currentActivity
       if (activity == null) {
         promise.reject("NO_ACTIVITY", "Cannot request permissions without a foreground activity")
         return
@@ -71,11 +73,11 @@ class SmsReaderModule(private val reactContext: ReactApplicationContext) :
 
   override fun onRequestPermissionsResult(
       requestCode: Int,
-      permissions: Array<out String>?,
-      grantResults: IntArray?
+      permissions: Array<String>,
+      grantResults: IntArray
   ): Boolean {
     if (requestCode == PERMISSION_REQ_CODE) {
-      val granted = grantResults != null && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+      val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
       pendingPermissionPromise?.resolve(granted)
       pendingPermissionPromise = null
       return true
@@ -172,15 +174,36 @@ class SmsReaderModule(private val reactContext: ReactApplicationContext) :
     }
   }
 
+  private fun normalizeSender(sender: String): String {
+    var clean = sender.trim().lowercase()
+    clean = clean.replace(Regex("^[a-z]{2}-", RegexOption.IGNORE_CASE), "")
+    clean = clean.replace(Regex("-[a-z]{1,2}$", RegexOption.IGNORE_CASE), "")
+    return clean
+  }
+
   private fun matchesSender(address: String, senderRule: String): Boolean {
-    val cleanAddress = address.trim()
-    val cleanRule = senderRule.trim()
-    if (cleanAddress.equals(cleanRule, ignoreCase = true)) {
+    val cleanAddress = address.trim().lowercase()
+    val cleanRule = senderRule.trim().lowercase()
+    if (cleanAddress == cleanRule) {
+      return true
+    }
+    val normAddress = normalizeSender(address)
+    val normRule = normalizeSender(senderRule)
+    if (normAddress.isNotEmpty() && normAddress == normRule) {
       return true
     }
     // Handle 2-character telecom routing prefixes like "VK-HDFCBK" or "AD-SBIINB"
-    if (cleanAddress.endsWith("-$cleanRule", ignoreCase = true) ||
-        cleanAddress.endsWith(cleanRule, ignoreCase = true)) {
+    if (cleanAddress.endsWith("-$cleanRule") || cleanAddress.endsWith(cleanRule)) {
+      return true
+    }
+    if (cleanRule.endsWith("-$cleanAddress") || cleanRule.endsWith(cleanAddress)) {
+      return true
+    }
+    if (normRule.isNotEmpty() && (cleanAddress.endsWith("-$normRule") || cleanAddress.endsWith(normRule))) {
+      return true
+    }
+    if (normAddress.isNotEmpty() && normRule.isNotEmpty() &&
+        (normAddress.endsWith(normRule) || normRule.endsWith(normAddress))) {
       return true
     }
     return false

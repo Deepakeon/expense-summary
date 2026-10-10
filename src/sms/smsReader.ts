@@ -1,7 +1,7 @@
 import { NativeModules, Platform } from 'react-native';
 import { FetchSmsBatchOptions, ISmsReader, RawSmsMessage } from './types';
 
-const { SmsReaderModule } = NativeModules;
+const getSmsReaderModule = () => NativeModules.SmsReaderModule;
 
 type MockSmsProvider = (options?: FetchSmsBatchOptions) => Promise<RawSmsMessage[]>;
 type MockPermissionProvider = {
@@ -28,11 +28,12 @@ class SmsReaderBridge implements ISmsReader {
     if (Platform.OS !== 'android') {
       return false;
     }
-    if (!SmsReaderModule || typeof SmsReaderModule.hasPermissions !== 'function') {
+    const module = getSmsReaderModule();
+    if (!module || typeof module.hasPermissions !== 'function') {
       return false;
     }
     try {
-      return await SmsReaderModule.hasPermissions();
+      return await module.hasPermissions();
     } catch {
       return false;
     }
@@ -45,11 +46,12 @@ class SmsReaderBridge implements ISmsReader {
     if (Platform.OS !== 'android') {
       return false;
     }
-    if (!SmsReaderModule || typeof SmsReaderModule.requestPermissions !== 'function') {
+    const module = getSmsReaderModule();
+    if (!module || typeof module.requestPermissions !== 'function') {
       return false;
     }
     try {
-      return await SmsReaderModule.requestPermissions();
+      return await module.requestPermissions();
     } catch {
       return false;
     }
@@ -62,7 +64,8 @@ class SmsReaderBridge implements ISmsReader {
     if (Platform.OS !== 'android') {
       return [];
     }
-    if (!SmsReaderModule || typeof SmsReaderModule.fetchSmsBatch !== 'function') {
+    const module = getSmsReaderModule();
+    if (!module || typeof module.fetchSmsBatch !== 'function') {
       return [];
     }
 
@@ -71,7 +74,7 @@ class SmsReaderBridge implements ISmsReader {
     const maxLimit = options.maxLimit ?? 1000;
 
     try {
-      const messages = await SmsReaderModule.fetchSmsBatch(senders, minTimestamp, maxLimit);
+      const messages = await module.fetchSmsBatch(senders, minTimestamp, maxLimit);
       return (messages || []).map((m: any) => ({
         id: String(m.id),
         sender: String(m.sender),
