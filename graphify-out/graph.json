@@ -59,19 +59,6 @@
       "source_location": "L3"
     },
     {
-      "id": "src_db_types_categorysummary",
-      "label": "CategorySummary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DatabaseRepository",
-      "file_type": "code",
-      "norm_label": "categorysummary",
-      "source_file": "src/db/types.ts",
-      "source_location": "L75"
-    },
-    {
       "id": "src_db_types_extractiontemplate",
       "label": "ExtractionTemplate",
       "_callable": true,
@@ -150,19 +137,6 @@
       "source_location": "L59"
     },
     {
-      "id": "src_db_types_transactionsummary",
-      "label": "TransactionSummary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DatabaseRepository",
-      "file_type": "code",
-      "norm_label": "transactionsummary",
-      "source_file": "src/db/types.ts",
-      "source_location": "L68"
-    },
-    {
       "id": "src_db_types_transactiontype",
       "label": "TransactionType",
       "_callable": true,
@@ -187,6 +161,32 @@
       "norm_label": "transactionsscreenprops",
       "source_file": "src/screens/TransactionsScreen.tsx",
       "source_location": "L14"
+    },
+    {
+      "id": "src_db_types_categorysummary",
+      "label": "CategorySummary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "DashboardScreen.tsx",
+      "file_type": "code",
+      "norm_label": "categorysummary",
+      "source_file": "src/db/types.ts",
+      "source_location": "L75"
+    },
+    {
+      "id": "src_db_types_transactionsummary",
+      "label": "TransactionSummary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "DashboardScreen.tsx",
+      "file_type": "code",
+      "norm_label": "transactionsummary",
+      "source_file": "src/db/types.ts",
+      "source_location": "L68"
     },
     {
       "id": "src_navigation_appshell_appshellprops",
@@ -316,7 +316,7 @@
       "file_type": "code",
       "norm_label": "batchsyncservice",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L40"
+      "source_location": "L61"
     },
     {
       "id": "tests_components_dashboardandappshell_test_mocksmsreader",
@@ -410,45 +410,6 @@
       "source_location": "L4"
     },
     {
-      "id": "src_parser_templateengine_parsedtransactionfields",
-      "label": "ParsedTransactionFields",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "parsedtransactionfields",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "src_parser_templateengine_supportedtoken",
-      "label": "SupportedToken",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "supportedtoken",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_parser_templateengine_templatevalidationresult",
-      "label": "TemplateValidationResult",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "templatevalidationresult",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L14"
-    },
-    {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule",
       "label": "SmsReaderModule",
       "_callable": true,
@@ -459,7 +420,7 @@
       "file_type": "code",
       "norm_label": "smsreadermodule",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "src_components_addsenderrulemodal_addsenderrulemodalprops",
@@ -486,6 +447,45 @@
       "norm_label": "activetab",
       "source_file": "src/navigation/AppShell.tsx",
       "source_location": "L18"
+    },
+    {
+      "id": "src_parser_templateengine_parsedtransactionfields",
+      "label": "ParsedTransactionFields",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "parsedtransactionfields",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_parser_templateengine_supportedtoken",
+      "label": "SupportedToken",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "supportedtoken",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_parser_templateengine_templatevalidationresult",
+      "label": "TemplateValidationResult",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "templatevalidationresult",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L14"
     },
     {
       "id": "src_screens_reviewqueuescreen_reviewqueuescreenprops",
@@ -875,7 +875,19 @@
       "file_type": "code",
       "norm_label": ".runbatchsync()",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L46"
+      "source_location": "L67"
+    },
+    {
+      "id": "src_sms_smsreader_getsmsreadermodule",
+      "label": "getSmsReaderModule()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "DashboardScreen.tsx",
+      "file_type": "code",
+      "norm_label": "getsmsreadermodule()",
+      "source_file": "src/sms/smsReader.ts",
+      "source_location": "L4"
     },
     {
       "id": "src_sms_smsreader_setmockpermissionprovider",
@@ -911,7 +923,7 @@
       "file_type": "code",
       "norm_label": ".fetchsmsbatch()",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L58"
+      "source_location": "L60"
     },
     {
       "id": "src_sms_smsreader_smsreaderbridge_haspermissions",
@@ -935,7 +947,7 @@
       "file_type": "code",
       "norm_label": ".requestpermissions()",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L41"
+      "source_location": "L42"
     },
     {
       "id": "src_sms_types_ismsreader_fetchsmsbatch",
@@ -983,7 +995,7 @@
       "file_type": "code",
       "norm_label": ".constructor()",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L41"
+      "source_location": "L62"
     },
     {
       "id": "src_sync_syncservice_computecontenthash",
@@ -1006,6 +1018,18 @@
       "community_name": "DashboardScreen.tsx",
       "file_type": "code",
       "norm_label": "matchessender()",
+      "source_file": "src/sync/syncService.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_sync_syncservice_normalizesender",
+      "label": "normalizeSender()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "DashboardScreen.tsx",
+      "file_type": "code",
+      "norm_label": "normalizesender()",
       "source_file": "src/sync/syncService.ts",
       "source_location": "L28"
     },
@@ -1394,18 +1418,6 @@
       "source_location": "L8"
     },
     {
-      "id": "tests_components_senderrules_test_extractalltext",
-      "label": "extractAllText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "repository.ts",
-      "file_type": "code",
-      "norm_label": "extractalltext()",
-      "source_file": "__tests__/components/SenderRules.test.tsx",
-      "source_location": "L10"
-    },
-    {
       "id": "tests_components_transactionsscreen_test_extractalltext",
       "label": "extractAllText()",
       "_callable": true,
@@ -1430,66 +1442,6 @@
       "source_location": "L2"
     },
     {
-      "id": "src_components_templatebuildermodal_templatebuildermodal",
-      "label": "TemplateBuilderModal()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "templatebuildermodal()",
-      "source_file": "src/components/TemplateBuilderModal.tsx",
-      "source_location": "L32"
-    },
-    {
-      "id": "src_parser_templateengine_compiletemplate",
-      "label": "compileTemplate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "compiletemplate()",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L64"
-    },
-    {
-      "id": "src_parser_templateengine_escaperegex",
-      "label": "escapeRegex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "escaperegex()",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L60"
-    },
-    {
-      "id": "src_parser_templateengine_extracttransactionfields",
-      "label": "extractTransactionFields()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "extracttransactionfields()",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L118"
-    },
-    {
-      "id": "src_parser_templateengine_validatetemplatepattern",
-      "label": "validateTemplatePattern()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "validatetemplatepattern()",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L20"
-    },
-    {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_fetchsmsbatch",
       "label": ".fetchSmsBatch()",
       "_callable": true,
@@ -1499,7 +1451,7 @@
       "file_type": "code",
       "norm_label": ".fetchsmsbatch()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L86"
+      "source_location": "L88"
     },
     {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_getname",
@@ -1511,7 +1463,7 @@
       "file_type": "code",
       "norm_label": ".getname()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L28"
+      "source_location": "L30"
     },
     {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_haspermissions",
@@ -1523,7 +1475,7 @@
       "file_type": "code",
       "norm_label": ".haspermissions()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L32"
+      "source_location": "L34"
     },
     {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_matchessender",
@@ -1535,7 +1487,19 @@
       "file_type": "code",
       "norm_label": ".matchessender()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L175"
+      "source_location": "L184"
+    },
+    {
+      "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_normalizesender",
+      "label": ".normalizeSender()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "SmsReaderModule.kt",
+      "file_type": "code",
+      "norm_label": ".normalizesender()",
+      "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
+      "source_location": "L177"
     },
     {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_onrequestpermissionsresult",
@@ -1547,7 +1511,7 @@
       "file_type": "code",
       "norm_label": ".onrequestpermissionsresult()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L72"
+      "source_location": "L74"
     },
     {
       "id": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_requestpermissions",
@@ -1559,7 +1523,7 @@
       "file_type": "code",
       "norm_label": ".requestpermissions()",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L42"
+      "source_location": "L44"
     },
     {
       "id": "app_app",
@@ -1586,6 +1550,18 @@
       "source_location": "L17"
     },
     {
+      "id": "src_components_templatebuildermodal_templatebuildermodal",
+      "label": "TemplateBuilderModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "templatebuildermodal()",
+      "source_file": "src/components/TemplateBuilderModal.tsx",
+      "source_location": "L32"
+    },
+    {
       "id": "src_navigation_appshell_appshell",
       "label": "AppShell()",
       "_callable": true,
@@ -1596,6 +1572,54 @@
       "norm_label": "appshell()",
       "source_file": "src/navigation/AppShell.tsx",
       "source_location": "L26"
+    },
+    {
+      "id": "src_parser_templateengine_compiletemplate",
+      "label": "compileTemplate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "compiletemplate()",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L64"
+    },
+    {
+      "id": "src_parser_templateengine_escaperegex",
+      "label": "escapeRegex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "escaperegex()",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L60"
+    },
+    {
+      "id": "src_parser_templateengine_extracttransactionfields",
+      "label": "extractTransactionFields()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "extracttransactionfields()",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L118"
+    },
+    {
+      "id": "src_parser_templateengine_validatetemplatepattern",
+      "label": "validateTemplatePattern()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "validatetemplatepattern()",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L20"
     },
     {
       "id": "src_screens_dashboardscreen_dashboardscreen",
@@ -1632,6 +1656,18 @@
       "norm_label": "senderrulesscreen()",
       "source_file": "src/screens/SenderRulesScreen.tsx",
       "source_location": "L22"
+    },
+    {
+      "id": "tests_components_senderrules_test_extractalltext",
+      "label": "extractAllText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "extractalltext()",
+      "source_file": "__tests__/components/SenderRules.test.tsx",
+      "source_location": "L10"
     },
     {
       "id": "ios_expensesummary_appdelegate_appdelegate_application",
@@ -1846,7 +1882,7 @@
       "file_type": "code",
       "norm_label": "smsreader",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L88"
+      "source_location": "L91"
     },
     {
       "id": "src_sms_types",
@@ -2892,17 +2928,6 @@
       "file_type": "code",
       "norm_label": "reviewqueuescreen.test.tsx",
       "source_file": "__tests__/components/ReviewQueueScreen.test.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_components_senderrules_test",
-      "label": "SenderRules.test.tsx",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "repository.ts",
-      "file_type": "code",
-      "norm_label": "senderrules.test.tsx",
-      "source_file": "__tests__/components/SenderRules.test.tsx",
       "source_location": "L1"
     },
     {
@@ -4217,61 +4242,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_components_templatebuildermodal",
-      "label": "TemplateBuilderModal.tsx",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "templatebuildermodal.tsx",
-      "source_file": "src/components/TemplateBuilderModal.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_templatebuildermodal_styles",
-      "label": "styles",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "styles",
-      "source_file": "src/components/TemplateBuilderModal.tsx",
-      "source_location": "L271"
-    },
-    {
-      "id": "src_parser_templateengine",
-      "label": "templateEngine.ts",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "templateengine.ts",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_parser_templateengine_supported_tokens",
-      "label": "SUPPORTED_TOKENS",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "supported_tokens",
-      "source_file": "src/parser/templateEngine.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_parser_templateengine_test",
-      "label": "templateEngine.test.ts",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "TemplateBuilderModal.tsx",
-      "file_type": "code",
-      "norm_label": "templateengine.test.ts",
-      "source_file": "__tests__/parser/templateEngine.test.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "scratch_sms_expense_extractor_issues_01_sqlite_schema_and_db_client",
       "label": "01-sqlite-schema-and-db-client.md",
       "_origin": "ast",
@@ -4563,6 +4533,17 @@
       "source_location": ""
     },
     {
+      "id": "reactmodule",
+      "label": "ReactModule",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "SmsReaderModule.kt",
+      "file_type": "code",
+      "norm_label": "reactmodule",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "readablearray",
       "label": "ReadableArray",
       "_origin": "ast",
@@ -4728,6 +4709,28 @@
       "source_location": "L85"
     },
     {
+      "id": "src_components_templatebuildermodal",
+      "label": "TemplateBuilderModal.tsx",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "templatebuildermodal.tsx",
+      "source_file": "src/components/TemplateBuilderModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_templatebuildermodal_styles",
+      "label": "styles",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "styles",
+      "source_file": "src/components/TemplateBuilderModal.tsx",
+      "source_location": "L271"
+    },
+    {
       "id": "src_navigation_appshell",
       "label": "AppShell.tsx",
       "_origin": "ast",
@@ -4748,6 +4751,28 @@
       "norm_label": "styles",
       "source_file": "src/navigation/AppShell.tsx",
       "source_location": "L164"
+    },
+    {
+      "id": "src_parser_templateengine",
+      "label": "templateEngine.ts",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "templateengine.ts",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_parser_templateengine_supported_tokens",
+      "label": "SUPPORTED_TOKENS",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "supported_tokens",
+      "source_file": "src/parser/templateEngine.ts",
+      "source_location": "L1"
     },
     {
       "id": "src_screens_reviewqueuescreen",
@@ -4802,6 +4827,28 @@
       "file_type": "code",
       "norm_label": "app.test.tsx",
       "source_file": "__tests__/App.test.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_components_senderrules_test",
+      "label": "SenderRules.test.tsx",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "senderrules.test.tsx",
+      "source_file": "__tests__/components/SenderRules.test.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_parser_templateengine_test",
+      "label": "templateEngine.test.ts",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "AppShell.tsx",
+      "file_type": "code",
+      "norm_label": "templateengine.test.ts",
+      "source_file": "__tests__/parser/templateEngine.test.ts",
       "source_location": "L1"
     },
     {
@@ -5662,6 +5709,18 @@
   ],
   "links": [
     {
+      "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule",
+      "target": "reactmodule",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "attribute",
+      "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
       "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_fetchsmsbatch",
       "target": "reactmethod",
       "relation": "references",
@@ -5670,7 +5729,7 @@
       "confidence_score": 1.0,
       "context": "attribute",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -5682,7 +5741,7 @@
       "confidence_score": 1.0,
       "context": "attribute",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -5694,7 +5753,7 @@
       "confidence_score": 1.0,
       "context": "attribute",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L42",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -5730,7 +5789,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L151",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_matchessender",
+      "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_normalizesender",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
+      "source_location": "L190",
       "weight": 1.0
     },
     {
@@ -5742,7 +5813,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L59",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -6095,14 +6166,26 @@
     },
     {
       "source": "src_sms_smsreader_smsreaderbridge_fetchsmsbatch",
-      "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_fetchsmsbatch",
+      "target": "src_sms_smsreader_getsmsreadermodule",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L74",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "src_sms_smsreader_smsreaderbridge_fetchsmsbatch",
+      "target": "src_sms_smsreader_smsreaderbridge_fetchsmsbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/sms/smsReader.ts",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -6119,14 +6202,14 @@
     },
     {
       "source": "src_sms_smsreader_smsreaderbridge_haspermissions",
-      "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_haspermissions",
+      "target": "src_sms_smsreader_getsmsreadermodule",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L35",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -6138,19 +6221,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L43",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
       "source": "src_sms_smsreader_smsreaderbridge_requestpermissions",
-      "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_requestpermissions",
+      "target": "src_sms_smsreader_getsmsreadermodule",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L52",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -6162,7 +6245,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L80",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -6174,7 +6257,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L89",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
@@ -6186,7 +6269,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L91",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "src_sync_syncservice_matchessender",
+      "target": "src_sync_syncservice_normalizesender",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/sync/syncService.ts",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -6235,6 +6330,18 @@
       "context": "call",
       "source_file": "__tests__/components/TransactionsScreen.test.tsx",
       "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_sync_syncservice_test_mocksmsreader_fetchsmsbatch",
+      "target": "src_sync_syncservice_matchessender",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "__tests__/sync/syncService.test.ts",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -6486,7 +6593,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -6498,7 +6605,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -6750,7 +6857,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L58",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -7169,6 +7276,21 @@
     },
     {
       "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule",
+      "target": "reactmodule",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "metadata": {
+        "target_fqn": "com.facebook.react.module.annotations.ReactModule"
+      },
+      "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule",
       "target": "permissionawareactivity",
       "relation": "imports",
       "_origin": "ast",
@@ -7179,7 +7301,7 @@
         "target_fqn": "com.facebook.react.modules.core.PermissionAwareActivity"
       },
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -7194,7 +7316,7 @@
         "target_fqn": "com.facebook.react.modules.core.PermissionListener"
       },
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -8981,6 +9103,18 @@
     },
     {
       "source": "tests_sync_syncservice_test",
+      "target": "src_sync_syncservice_matchessender",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "__tests__/sync/syncService.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_sync_syncservice_test",
       "target": "src_sms_types_ismsreader",
       "relation": "imports",
       "_origin": "ast",
@@ -10428,7 +10562,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -10440,7 +10574,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -10452,7 +10586,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -10464,7 +10598,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L72",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -10476,7 +10610,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L42",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -10596,7 +10730,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L58",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -10608,7 +10742,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L41",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -10620,7 +10754,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L41",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -11046,7 +11180,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -13427,6 +13561,17 @@
     },
     {
       "source": "src_sms_smsreader",
+      "target": "src_sms_smsreader_getsmsreadermodule",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/sms/smsReader.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_sms_smsreader",
       "target": "src_sms_smsreader_mocksmsprovider",
       "relation": "contains",
       "_origin": "ast",
@@ -13455,7 +13600,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L88",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -13504,7 +13649,7 @@
     },
     {
       "source": "src_sync_syncservice",
-      "target": "src_sync_syncservice_matchessender",
+      "target": "src_sync_syncservice_normalizesender",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13515,13 +13660,24 @@
     },
     {
       "source": "src_sync_syncservice",
+      "target": "src_sync_syncservice_matchessender",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/sync/syncService.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "src_sync_syncservice",
       "target": "src_sync_syncservice_batchsyncservice",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L40",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -13618,7 +13774,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -13673,7 +13829,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -13733,13 +13889,24 @@
     },
     {
       "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule",
+      "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_normalizesender",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule",
       "target": "android_app_src_main_java_com_expensesummary_sms_smsreadermodule_smsreadermodule_matchessender",
       "relation": "method",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L175",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -13750,7 +13917,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L28",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -13761,7 +13928,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -13772,7 +13939,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L42",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -13783,7 +13950,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L72",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -13794,7 +13961,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -14278,7 +14445,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L41",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -14289,7 +14456,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sms/smsReader.ts",
-      "source_location": "L58",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -14333,7 +14500,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L41",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -14344,7 +14511,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L46",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -14747,6 +14914,18 @@
     },
     {
       "source": "src_sync_syncservice_batchsyncservice_runbatchsync",
+      "target": "src_db_repository_databaserepository_inserttransaction",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "call",
+      "source_file": "src/sync/syncService.ts",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "src_sync_syncservice_batchsyncservice_runbatchsync",
       "target": "src_db_repository_databaserepository_insertquarantinedmessage",
       "relation": "calls",
       "_origin": "ast",
@@ -14754,7 +14933,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L118",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -14766,7 +14945,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L133",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -14778,7 +14957,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L47",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -14790,7 +14969,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L48",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -14802,7 +14981,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L60",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -14814,19 +14993,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/sync/syncService.ts",
-      "source_location": "L76",
-      "weight": 1.0
-    },
-    {
-      "source": "src_sync_syncservice_batchsyncservice_runbatchsync",
-      "target": "src_db_repository_databaserepository_inserttransaction",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "context": "call",
-      "source_file": "src/sync/syncService.ts",
-      "source_location": "L92",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -14843,5 +15010,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d9c0c13d52791c4294bb3d5992998dbfcd83df24"
+  "built_at_commit": "65c59fcbb095091c118d2c33be179cb9ffb823b1"
 }
