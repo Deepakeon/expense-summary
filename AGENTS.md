@@ -16,6 +16,10 @@ Single-context repository layout (`CONTEXT.md` and `docs/adr/` at repo root). Se
 
 ## Investigation & Speed Rules
 
-- **Fast navigation (Graphify)**: Always use `graphify query "<concept/symbol>"` or `query_graph` to locate relevant code immediately before browsing directories or reading multiple files.
+- **Fast navigation (Graphify)**:
+  - Check `graphify-out/wiki/index.md` first to understand architecture.
+  - Run CLI `graphify query "<symbol>" --budget 500` or `graphify explain "<symbol>"` to find symbol locations (MCP `query_graph` takes `question` param).
+  - Target exact symbol names (e.g. `matchesSender`), not broad sentences.
+  - Do NOT browse directories or call `view_file` speculatively across files. Only inspect narrow line ranges (<= 60 lines) surfaced by Graphify.
 - **Scope & No PR archaeology**: Do NOT browse closed PRs (`gh pr view/diff`), historical issues, or git commit history unless explicitly referenced by the task or regression report. Rely strictly on current code, repro tests, and issue details.
 - **Pre-installed dependencies**: In CI and dev environments, assume dependencies are pre-installed; never run `npm install` or `npm ci` unless package manifests have been modified.
