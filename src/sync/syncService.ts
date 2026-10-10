@@ -25,13 +25,34 @@ export function computeContentHash(message: RawSmsMessage): string {
   return (4294967296 * (2097151 & hash2) + (hash1 >>> 0)).toString(16);
 }
 
+export function normalizeSender(sender: string): string {
+  let clean = sender.trim().toLowerCase();
+  clean = clean.replace(/^[a-z]{2}-/i, '');
+  clean = clean.replace(/-[a-z]{1,2}$/i, '');
+  return clean;
+}
+
 export function matchesSender(address: string, senderRule: string): boolean {
   const cleanAddress = address.trim().toLowerCase();
   const cleanRule = senderRule.trim().toLowerCase();
   if (cleanAddress === cleanRule) {
     return true;
   }
+  const normAddress = normalizeSender(address);
+  const normRule = normalizeSender(senderRule);
+  if (normAddress && normAddress === normRule) {
+    return true;
+  }
   if (cleanAddress.endsWith(`-${cleanRule}`) || cleanAddress.endsWith(cleanRule)) {
+    return true;
+  }
+  if (cleanRule.endsWith(`-${cleanAddress}`) || cleanRule.endsWith(cleanAddress)) {
+    return true;
+  }
+  if (normRule && (cleanAddress.endsWith(`-${normRule}`) || cleanAddress.endsWith(normRule))) {
+    return true;
+  }
+  if (normAddress && normRule && (normAddress.endsWith(normRule) || normRule.endsWith(normAddress))) {
     return true;
   }
   return false;
