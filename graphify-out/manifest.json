@@ -1,0 +1,686 @@
+{
+  ".eslintrc.js": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.853944,
+    "ast_hash": "7f94ddd2e552f8e276acd02c97f652ae",
+    "semantic_hash": ""
+  },
+  ".github/aw/actions-lock.json": {
+    "mtime": 1790561327.0943286,
+    "seen": 1791622813.8539524,
+    "ast_hash": "28a95b458c5083316ab1c96649c7e36b",
+    "semantic_hash": ""
+  },
+  ".prettierrc.js": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.853956,
+    "ast_hash": "0b97c6e850da3e507a09b2ba38b291e2",
+    "semantic_hash": ""
+  },
+  ".vscode/settings.json": {
+    "mtime": 1790560174.4903963,
+    "seen": 1791622813.8539581,
+    "ast_hash": "767fdfb571e20ec4f058d0ac4bfa30fc",
+    "semantic_hash": ""
+  },
+  "App.tsx": {
+    "mtime": 1788111405.2948236,
+    "seen": 1791622813.8539593,
+    "ast_hash": "9cf5a6a0ca358f01c6b72df4177bcf27",
+    "semantic_hash": ""
+  },
+  "__tests__/App.test.tsx": {
+    "mtime": 1788111531.4965854,
+    "seen": 1791622813.8539605,
+    "ast_hash": "fac2e61f18c5aaa25e4f826cb5ae1c53",
+    "semantic_hash": ""
+  },
+  "__tests__/components/DashboardAndAppShell.test.tsx": {
+    "mtime": 1788111588.3819284,
+    "seen": 1791622813.8539622,
+    "ast_hash": "fd9aa8f3690b94e341ecb103d53f3c54",
+    "semantic_hash": ""
+  },
+  "__tests__/components/ReviewQueueScreen.test.tsx": {
+    "mtime": 1788111571.1338243,
+    "seen": 1791622813.853963,
+    "ast_hash": "5ec785d76d07074292103237d7fbad9a",
+    "semantic_hash": ""
+  },
+  "__tests__/components/SenderRules.test.tsx": {
+    "mtime": 1788111578.7698705,
+    "seen": 1791622813.853964,
+    "ast_hash": "e8e2c50ee835ef1a9a0d77d77a6da27b",
+    "semantic_hash": ""
+  },
+  "__tests__/components/TransactionsScreen.test.tsx": {
+    "mtime": 1788111540.218638,
+    "seen": 1791622813.853965,
+    "ast_hash": "9070eb3d514623b89d5497a3d35bcbf2",
+    "semantic_hash": ""
+  },
+  "__tests__/db/database.test.ts": {
+    "mtime": 1788110300.6134114,
+    "seen": 1791622813.853966,
+    "ast_hash": "1501e72fc48c7aca43720f41e15c5cb4",
+    "semantic_hash": ""
+  },
+  "__tests__/parser/templateEngine.test.ts": {
+    "mtime": 1788111462.7251704,
+    "seen": 1791622813.8539677,
+    "ast_hash": "e2dd71a5ed5809a9591a70343e9a5e2e",
+    "semantic_hash": ""
+  },
+  "__tests__/sms/smsReader.test.ts": {
+    "mtime": 1788110734.6344013,
+    "seen": 1791622813.8539689,
+    "ast_hash": "d21a5f7d9873674c133aa95e532d6c2f",
+    "semantic_hash": ""
+  },
+  "__tests__/sync/syncService.test.ts": {
+    "mtime": 1788110776.0527782,
+    "seen": 1791622813.8539698,
+    "ast_hash": "f7b8207676f5b71af05da1974fc68efb",
+    "semantic_hash": ""
+  },
+  "android/app/build.gradle": {
+    "mtime": 1790561608.163602,
+    "seen": 1791622813.853971,
+    "ast_hash": "979f93e3435be613b502485b8adede3a",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/java/com/expensesummary/MainActivity.kt": {
+    "mtime": 1788106686.6319354,
+    "seen": 1791622813.8539717,
+    "ast_hash": "d746466a28fb65fcea7993dea6db5995",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/java/com/expensesummary/MainApplication.kt": {
+    "mtime": 1788110725.5693188,
+    "seen": 1791622813.8539732,
+    "ast_hash": "a3b7b97384b8828a10ec98e8b46e95df",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/java/com/expensesummary/sms/SmsReaderModule.kt": {
+    "mtime": 1790561610.1137612,
+    "seen": 1791622813.8539743,
+    "ast_hash": "aec3eccc9574356c6c3dbfa52d3f8b1d",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/java/com/expensesummary/sms/SmsReaderPackage.kt": {
+    "mtime": 1788110718.7512567,
+    "seen": 1791622813.8539753,
+    "ast_hash": "7d585b6b9e2858dd8485b18e91e4df09",
+    "semantic_hash": ""
+  },
+  "android/build.gradle": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539762,
+    "ast_hash": "74014af2db75a552491eae9d667d4936",
+    "semantic_hash": ""
+  },
+  "android/gradlew": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539774,
+    "ast_hash": "65578da0358a01f31a6a78dfcf47e2bf",
+    "semantic_hash": ""
+  },
+  "android/settings.gradle": {
+    "mtime": 1788106686.6119382,
+    "seen": 1791622813.8539784,
+    "ast_hash": "46708b3dbb595306417c7aa3c3e85e4d",
+    "semantic_hash": ""
+  },
+  "app.json": {
+    "mtime": 1788106686.6119382,
+    "seen": 1791622813.8539798,
+    "ast_hash": "013110ee579a4d8408108193c2df8b3f",
+    "semantic_hash": ""
+  },
+  "assets/quiz.js": {
+    "mtime": 1790616550.0900538,
+    "seen": 1791622813.853981,
+    "ast_hash": "64be58c81c8c6b608d1438bd587b6ebf",
+    "semantic_hash": ""
+  },
+  "babel.config.js": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539822,
+    "ast_hash": "21de76e1dac94cc04e86bc7eca16e321",
+    "semantic_hash": ""
+  },
+  "index.js": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539832,
+    "ast_hash": "ade3b5e3abc75237f168c020a9a63176",
+    "semantic_hash": ""
+  },
+  "ios/expenseSummary/AppDelegate.swift": {
+    "mtime": 1788106686.6109383,
+    "seen": 1791622813.8539844,
+    "ast_hash": "8458dd554ab5515a14b8ca84d154ba27",
+    "semantic_hash": ""
+  },
+  "ios/expenseSummary/Images.xcassets/AppIcon.appiconset/Contents.json": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539855,
+    "ast_hash": "e168fc63a8e2444657c26fc5b29ddc7a",
+    "semantic_hash": ""
+  },
+  "ios/expenseSummary/Images.xcassets/Contents.json": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.853987,
+    "ast_hash": "ed9be3f0744043070dbefb43e20bfb75",
+    "semantic_hash": ""
+  },
+  "jest.config.js": {
+    "mtime": 1790561590.242025,
+    "seen": 1791622813.8539884,
+    "ast_hash": "814507ada281efe2e5aab306ea5861e9",
+    "semantic_hash": ""
+  },
+  "metro.config.js": {
+    "mtime": 1788106686.5899415,
+    "seen": 1791622813.8539894,
+    "ast_hash": "0783b3967cccd36a5178af469efd5e1e",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1790561595.7560823,
+    "seen": 1791622813.8539906,
+    "ast_hash": "9f8c28bd22b38688bc0c8df643cc3584",
+    "semantic_hash": ""
+  },
+  "scripts/observability/loki_forwarder.py": {
+    "mtime": 1791390058.231529,
+    "seen": 1791622813.8539917,
+    "ast_hash": "68b3101ecd18e09a8816d72358337c0f",
+    "semantic_hash": ""
+  },
+  "src/components/AddSenderRuleModal.tsx": {
+    "mtime": 1788110982.440272,
+    "seen": 1791622813.853993,
+    "ast_hash": "2f24e0ceb09f74b809528f2475613b95",
+    "semantic_hash": ""
+  },
+  "src/components/TemplateBuilderModal.tsx": {
+    "mtime": 1788110997.1123605,
+    "seen": 1791622813.8539941,
+    "ast_hash": "9325734d33fdac163d137238ae923554",
+    "semantic_hash": ""
+  },
+  "src/components/TransactionDetailModal.tsx": {
+    "mtime": 1788111088.969915,
+    "seen": 1791622813.853995,
+    "ast_hash": "3deafe33e07014591d939a5ae152009c",
+    "semantic_hash": ""
+  },
+  "src/db/driver.ts": {
+    "mtime": 1788110177.7504873,
+    "seen": 1791622813.853996,
+    "ast_hash": "967f27f8ff196e699195a048ea2ad6a7",
+    "semantic_hash": ""
+  },
+  "src/db/getDb.ts": {
+    "mtime": 1790561614.7858095,
+    "seen": 1791622813.853997,
+    "ast_hash": "c4215ab4d37d607b8b6618562c76a536",
+    "semantic_hash": ""
+  },
+  "src/db/index.ts": {
+    "mtime": 1790561616.798928,
+    "seen": 1791622813.8539982,
+    "ast_hash": "10f04bbf60fb372f47388f208aebd676",
+    "semantic_hash": ""
+  },
+  "src/db/nodeDriver.ts": {
+    "mtime": 1788110184.83131,
+    "seen": 1791622813.8539991,
+    "ast_hash": "513ec9a52454a247b6ecf6281874b28a",
+    "semantic_hash": ""
+  },
+  "src/db/opSqliteDriver.ts": {
+    "mtime": 1788110293.997577,
+    "seen": 1791622813.8540003,
+    "ast_hash": "83592b531c4e1d020f7e1a36e93bb002",
+    "semantic_hash": ""
+  },
+  "src/db/repository.ts": {
+    "mtime": 1788110215.4975424,
+    "seen": 1791622813.854001,
+    "ast_hash": "e169368d68340ed311420f292faa846f",
+    "semantic_hash": ""
+  },
+  "src/db/schema.ts": {
+    "mtime": 1788110201.8758833,
+    "seen": 1791622813.8540022,
+    "ast_hash": "0c8b159fe32f0b1a9e6614f7b69ac45b",
+    "semantic_hash": ""
+  },
+  "src/db/types.ts": {
+    "mtime": 1788110153.314099,
+    "seen": 1791622813.854004,
+    "ast_hash": "ab2720d3816468cac79a5c0759e1d47c",
+    "semantic_hash": ""
+  },
+  "src/navigation/AppShell.tsx": {
+    "mtime": 1788111357.0125322,
+    "seen": 1791622813.854005,
+    "ast_hash": "f23d475de36a45a3f7702a541901886c",
+    "semantic_hash": ""
+  },
+  "src/parser/templateEngine.ts": {
+    "mtime": 1788111482.7432911,
+    "seen": 1791622813.854006,
+    "ast_hash": "67f0456ded57bee56849f0296a392035",
+    "semantic_hash": ""
+  },
+  "src/screens/DashboardScreen.tsx": {
+    "mtime": 1788111241.980838,
+    "seen": 1791622813.8540072,
+    "ast_hash": "bad9fe2988c31acd8d9e4cd33257d788",
+    "semantic_hash": ""
+  },
+  "src/screens/ReviewQueueScreen.tsx": {
+    "mtime": 1788111194.9825547,
+    "seen": 1791622813.854008,
+    "ast_hash": "5b1df49af171441f172cb06b04c9fb80",
+    "semantic_hash": ""
+  },
+  "src/screens/SenderRulesScreen.tsx": {
+    "mtime": 1788110970.8076978,
+    "seen": 1791622813.8540092,
+    "ast_hash": "6d95d88b2e9b81f57a8a044ea37a923b",
+    "semantic_hash": ""
+  },
+  "src/screens/TransactionsScreen.tsx": {
+    "mtime": 1788111105.705016,
+    "seen": 1791622813.85401,
+    "ast_hash": "66d9cb54117ef35840009334cce3f939",
+    "semantic_hash": ""
+  },
+  "src/sms/smsReader.ts": {
+    "mtime": 1788111492.9193525,
+    "seen": 1791622813.8540108,
+    "ast_hash": "2d4ea27d80ff0e2f9b4b49571ff4fd77",
+    "semantic_hash": ""
+  },
+  "src/sms/types.ts": {
+    "mtime": 1788110739.5014455,
+    "seen": 1791622813.854012,
+    "ast_hash": "882f356de039b4efce6fef66769e1afe",
+    "semantic_hash": ""
+  },
+  "src/sync/syncService.ts": {
+    "mtime": 1788111501.290403,
+    "seen": 1791622813.854013,
+    "ast_hash": "8f01519950a6a713a5bb0a56652d166d",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1788106686.5969405,
+    "seen": 1791622813.854014,
+    "ast_hash": "b5783f87a2a7475a698005e681560a34",
+    "semantic_hash": ""
+  },
+  ".github/skills/agentic-workflows/SKILL.md": {
+    "mtime": 1790560174.4903963,
+    "seen": 1791622813.8540149,
+    "ast_hash": "96c0d26bab32cc9092c2c09bd39ada63",
+    "semantic_hash": ""
+  },
+  ".github/workflows/antigravity-fix.yml": {
+    "mtime": 1791622790.253761,
+    "seen": 1791622813.854016,
+    "ast_hash": "a17a90936496e236f191fbb0d0b11d0d",
+    "semantic_hash": ""
+  },
+  ".scratch/agent-observability/research.md": {
+    "mtime": 1791387414.5313342,
+    "seen": 1791622813.8540168,
+    "ast_hash": "9fd08117e2dcd003fa9794fae8b33d98",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/01-sqlite-schema-and-db-client.md": {
+    "mtime": 1788110412.0326219,
+    "seen": 1791622813.8540177,
+    "ast_hash": "29c00f4693b4fff0f7f78c944fd53185",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/02-visual-token-template-engine.md": {
+    "mtime": 1788110686.8479662,
+    "seen": 1791622813.854019,
+    "ast_hash": "a58c18f964d6db6c3d6048a9ea6344c5",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/03-native-android-sms-reader.md": {
+    "mtime": 1788110762.9336588,
+    "seen": 1791622813.8540199,
+    "ast_hash": "ecfafe5401c49301f60958cabff48131",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/04-batch-sync-and-deduplication-pipeline.md": {
+    "mtime": 1788110804.5980382,
+    "seen": 1791622813.8540208,
+    "ast_hash": "6467aa8402e4453e107a0d3d37e0090a",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/05-sender-rules-and-template-builder-ui.md": {
+    "mtime": 1788111066.0957768,
+    "seen": 1791622813.8540215,
+    "ast_hash": "777f0f9d82cf6e833c37b95dec856931",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/06-transactions-list-and-detail-ui.md": {
+    "mtime": 1788111137.2472062,
+    "seen": 1791622813.8540227,
+    "ast_hash": "0358067cb63da03b4e26c9351af942a0",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/07-review-queue-and-quarantined-messages-ui.md": {
+    "mtime": 1788111215.142676,
+    "seen": 1791622813.8540237,
+    "ast_hash": "a8df303bebc46cacf1053b8799e90d15",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/issues/08-dashboard-summary-and-navigation-shell.md": {
+    "mtime": 1788111386.8647125,
+    "seen": 1791622813.8540246,
+    "ast_hash": "b0e38ec2822bcf6fc6cf426f22b1746d",
+    "semantic_hash": ""
+  },
+  ".scratch/sms-expense-extractor/spec.md": {
+    "mtime": 1788109441.9296248,
+    "seen": 1791622813.8540254,
+    "ast_hash": "f5bfc1cd9bfebde412a5a4246daaa4d7",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1788108345.0022447,
+    "seen": 1791622813.8540268,
+    "ast_hash": "5cc1a6d2b0195fbfbf88096c0fc7673b",
+    "semantic_hash": ""
+  },
+  "CONTEXT.md": {
+    "mtime": 1788109285.361547,
+    "seen": 1791622813.8540275,
+    "ast_hash": "49fb978ad0a88686073e13ac88bf36b6",
+    "semantic_hash": ""
+  },
+  "MISSION.md": {
+    "mtime": 1791389120.19635,
+    "seen": 1791622813.8540285,
+    "ast_hash": "43a01bdda44127efa46de05610bb993c",
+    "semantic_hash": ""
+  },
+  "NOTES.md": {
+    "mtime": 1791389267.8005812,
+    "seen": 1791622813.8540297,
+    "ast_hash": "e975fa46bf99f2abf2caed4c252fea60",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.8540308,
+    "ast_hash": "d45b78ef50ead1fe965f9e84f45f5601",
+    "semantic_hash": ""
+  },
+  "RESOURCES.md": {
+    "mtime": 1791389139.7816463,
+    "seen": 1791622813.8540318,
+    "ast_hash": "487f7822bd99d5ad1f364dd00d95c4a9",
+    "semantic_hash": ""
+  },
+  "docker-compose.observability.yml": {
+    "mtime": 1791390080.056859,
+    "seen": 1791622813.854033,
+    "ast_hash": "77ee59aba33379e2e7f1c093915628e9",
+    "semantic_hash": ""
+  },
+  "docs/adr/0001-op-sqlite-storage.md": {
+    "mtime": 1788108814.357232,
+    "seen": 1791622813.854034,
+    "ast_hash": "261341f6c984a5492a9faa8db7149858",
+    "semantic_hash": ""
+  },
+  "docs/adr/0002-android-batch-sms-extraction.md": {
+    "mtime": 1788108815.4282465,
+    "seen": 1791622813.8540347,
+    "ast_hash": "f932994816d01d41f8d55846f9eb554e",
+    "semantic_hash": ""
+  },
+  "docs/adr/0003-per-sender-extraction-templates.md": {
+    "mtime": 1788109152.1707613,
+    "seen": 1791622813.8540356,
+    "ast_hash": "2b092a8ac3b0a1ae8495589c681040c9",
+    "semantic_hash": ""
+  },
+  "docs/adr/0004-custom-kotlin-native-module.md": {
+    "mtime": 1788109152.6917682,
+    "seen": 1791622813.8540368,
+    "ast_hash": "09f2ae0135bf7708e8b7bc902efbf57d",
+    "semantic_hash": ""
+  },
+  "docs/adr/0005-visual-token-template-representation.md": {
+    "mtime": 1788109293.7666597,
+    "seen": 1791622813.8540378,
+    "ast_hash": "d1bd0c47c53afd309c68a8d9cbebb6dd",
+    "semantic_hash": ""
+  },
+  "docs/agents/domain.md": {
+    "mtime": 1788108347.6532722,
+    "seen": 1791622813.8540392,
+    "ast_hash": "5c554b97de22d1765176bc82093ca190",
+    "semantic_hash": ""
+  },
+  "docs/agents/issue-tracker.md": {
+    "mtime": 1788108346.1292565,
+    "seen": 1791622813.8540406,
+    "ast_hash": "f6ea6281af476a211243069a6cd171f8",
+    "semantic_hash": ""
+  },
+  "docs/agents/triage-labels.md": {
+    "mtime": 1788108346.8932643,
+    "seen": 1791622813.8540416,
+    "ast_hash": "22add54cb98451c55b20e6b7992d4a85",
+    "semantic_hash": ""
+  },
+  "learning-records/0001-prior-knowledge-and-local-antigravity-intent.md": {
+    "mtime": 1790616531.8879037,
+    "seen": 1791622813.8540428,
+    "ast_hash": "41ba9923785af202891f39a0af97b49e",
+    "semantic_hash": ""
+  },
+  "learning-records/0002-matt-pocock-debugging-skills-integration.md": {
+    "mtime": 1790617494.636234,
+    "seen": 1791622813.854044,
+    "ast_hash": "159f277ba53d812ef4c78e65e9236757",
+    "semantic_hash": ""
+  },
+  "learning-records/0003-slash-command-and-issue-event-routing.md": {
+    "mtime": 1790618003.4118526,
+    "seen": 1791622813.854045,
+    "ast_hash": "173222a5adeb98f9e2bf134e5e2ed176",
+    "semantic_hash": ""
+  },
+  "learning-records/0004-engine-distinction-gemini-cli-vs-agy.md": {
+    "mtime": 1790646340.8017416,
+    "seen": 1791622813.8540459,
+    "ast_hash": "bfa99eebf13bf56abe14fb510b81661c",
+    "semantic_hash": ""
+  },
+  "learning-records/0005-agy-skill-invocation-and-dangerously-skip-permissions.md": {
+    "mtime": 1790646818.6321957,
+    "seen": 1791622813.854047,
+    "ast_hash": "b080a2df86da09e76454bed276d875d8",
+    "semantic_hash": ""
+  },
+  "learning-records/0006-native-workflows-do-not-need-compilation.md": {
+    "mtime": 1790647266.2507594,
+    "seen": 1791622813.854049,
+    "ast_hash": "b1e66ccde8fb0903cbbb545bea05aad1",
+    "semantic_hash": ""
+  },
+  "learning-records/0007-pr-creation-step-in-runner-workflow.md": {
+    "mtime": 1790651406.6791422,
+    "seen": 1791622813.8540502,
+    "ast_hash": "dd6038ebbf262c61435b259c4911f04c",
+    "semantic_hash": ""
+  },
+  "learning-records/0008-workflow-logging-and-artifact-capture.md": {
+    "mtime": 1790651529.5326805,
+    "seen": 1791622813.854051,
+    "ast_hash": "463b2954c2204bdc052c1eda75a3393b",
+    "semantic_hash": ""
+  },
+  "learning-records/0009-pr-body-root-cause-and-fix-structure.md": {
+    "mtime": 1790651849.2098877,
+    "seen": 1791622813.854052,
+    "ast_hash": "3f23c9ab39c242af709dc0f842be01fa",
+    "semantic_hash": ""
+  },
+  "learning-records/0010-agentic-observability-with-phoenix-and-stream-json.md": {
+    "mtime": 1791389149.3177903,
+    "seen": 1791622813.854053,
+    "ast_hash": "a2184ef857b16509e8d8eb592aa07e9b",
+    "semantic_hash": ""
+  },
+  "lessons/0001-install-and-register-runner.html": {
+    "mtime": 1790616574.3402538,
+    "seen": 1791622813.854054,
+    "ast_hash": "c849650f5209b3173807d2ef6b31cc78",
+    "semantic_hash": ""
+  },
+  "lessons/0002-configure-workflow-and-service.html": {
+    "mtime": 1790617515.9814277,
+    "seen": 1791622813.854055,
+    "ast_hash": "4ad51a990e4c5f3bfadd720b300d70f1",
+    "semantic_hash": ""
+  },
+  "lessons/0003-test-workflow-with-fix-slash-command.html": {
+    "mtime": 1790618022.622027,
+    "seen": 1791622813.854056,
+    "ast_hash": "4bca124bf765db920964416c996fd003",
+    "semantic_hash": ""
+  },
+  "lessons/0004-native-antigravity-runner-workflow.html": {
+    "mtime": 1790646360.3018162,
+    "seen": 1791622813.854057,
+    "ast_hash": "b12f4396a889d575892475dfb9622713",
+    "semantic_hash": ""
+  },
+  "lessons/0005-skill-expansion-and-cli-lifecycle.html": {
+    "mtime": 1790646847.4881861,
+    "seen": 1791622813.854058,
+    "ast_hash": "be5d5f68bf732be584edca71354816b6",
+    "semantic_hash": ""
+  },
+  "lessons/0006-native-workflows-vs-compiler.html": {
+    "mtime": 1790647281.3098276,
+    "seen": 1791622813.854059,
+    "ast_hash": "abc3925cbbbdc769009e33f1261d89b1",
+    "semantic_hash": ""
+  },
+  "lessons/0007-automated-pr-creation.html": {
+    "mtime": 1790651420.2365327,
+    "seen": 1791622813.85406,
+    "ast_hash": "d54352210378ede0e0115ebc6993238d",
+    "semantic_hash": ""
+  },
+  "lessons/0008-agent-log-capture-and-summaries.html": {
+    "mtime": 1790651544.6981173,
+    "seen": 1791622813.8540611,
+    "ast_hash": "6e38e95dbe5ce7f3753a104baf79ade6",
+    "semantic_hash": ""
+  },
+  "lessons/0009-structured-pull-request-body.html": {
+    "mtime": 1790651871.650534,
+    "seen": 1791622813.854062,
+    "ast_hash": "c527071ebdf2ba8ac0de3491f399f43d",
+    "semantic_hash": ""
+  },
+  "lessons/0010-agentic-observability-and-dashboards.html": {
+    "mtime": 1791389196.2184992,
+    "seen": 1791622813.8540633,
+    "ast_hash": "3406a07988d60448d90ffba132dd4e48",
+    "semantic_hash": ""
+  },
+  "reference/observability-cheatsheet.html": {
+    "mtime": 1791389173.0721493,
+    "seen": 1791622813.8540642,
+    "ast_hash": "afd49b27318187d70d82d13d93f8f0cf",
+    "semantic_hash": ""
+  },
+  "reference/runner-cheatsheet.html": {
+    "mtime": 1790616560.1281366,
+    "seen": 1791622813.8540652,
+    "ast_hash": "36adb07c8f09b68d9c400e49abcceb8e",
+    "semantic_hash": ""
+  },
+  "scripts/observability/grafana-datasources.yml": {
+    "mtime": 1791390096.8131123,
+    "seen": 1791622813.8540664,
+    "ast_hash": "f4f1067bda2929f33870d1ba1218de1c",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-hdpi/ic_launcher.png": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.8540676,
+    "ast_hash": "39370f3d8346edf24af4d811c7d6f70e",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.8540683,
+    "ast_hash": "20ccd3ed0e1f2ad24bb23bbe446bb3c4",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-mdpi/ic_launcher.png": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.8540692,
+    "ast_hash": "3f9aaf70b3e144d576b065f053d99962",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png": {
+    "mtime": 1788106686.5879416,
+    "seen": 1791622813.8540702,
+    "ast_hash": "5a4b3e0b53eae065fff672aa4826aa85",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.8540714,
+    "ast_hash": "f5b91ea2d6be8be772010065f9dc1c8f",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.8540723,
+    "ast_hash": "4cfea330328c6d01709e4ebc2424858a",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.8540733,
+    "ast_hash": "7c297b3cf4de675ebeb2b65e031188be",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.854074,
+    "ast_hash": "3b83d51d2253266ab4b1ace9af265e6e",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.8540752,
+    "ast_hash": "529bfacc3678dee05f8b0eb0ca0a0f96",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png": {
+    "mtime": 1788106686.5889416,
+    "seen": 1791622813.8540761,
+    "ast_hash": "250b231d6a4989ba507ae9b02db6b0dd",
+    "semantic_hash": ""
+  }
+}

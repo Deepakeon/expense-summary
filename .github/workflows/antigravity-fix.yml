@@ -13,7 +13,17 @@ jobs:
   antigravity-fix:
     if: startsWith(github.event.comment.body, '/fix')
     runs-on: self-hosted
+    timeout-minutes: 45
     steps:
+      - name: Acknowledge Trigger Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          REPO: ${{ github.repository }}
+        run: |
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
+          gh api --method POST "repos/$REPO/issues/comments/$COMMENT_ID/reactions" -f content="eyes" || true
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
@@ -84,42 +94,131 @@ jobs:
           path: agent-output.log
           retention-days: 7
 
-      - name: Open Pull Request & Notify Issue
+      - name: Open Pull Request & Notify Issue on Success
         if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_NO_UPDATE_NOTIFIER: "1"
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
-          BRANCH="fix/issue-$ISSUE_NUMBER"
-          if git ls-remote --exit-code --heads origin "$BRANCH"; then
-            PR_URL=$(gh pr list --head "$BRANCH" --json url --jq '.[0].url' 2>/dev/null || echo "")
+          python3 - << 'PYEOF'
+          import os
+          import subprocess
 
-            if [ -z "$PR_URL" ]; then
-              if [ -s agent-output.log ]; then
-                SUMMARY_CONTENT=$(cat agent-output.log)
-              else
-                SUMMARY_CONTENT="Resolved issue #$ISSUE_NUMBER using Antigravity runner."
-              fi
+          issue_num = os.environ.get("ISSUE_NUMBER", "")
+          issue_title = os.environ.get("ISSUE_TITLE", "")
+          repo = os.environ.get("REPO", "")
+          run_url = os.environ.get("RUN_URL", "")
+          run_id = os.environ.get("RUN_ID", "")
+          branch = f"fix/issue-{issue_num}"
 
-              PR_BODY=$(printf "Closes #%s\n\n## Summary\n\n%s" "$ISSUE_NUMBER" "$SUMMARY_CONTENT")
+          ai_response = ""
+          if os.path.exists("agent-output.log"):
+              with open("agent-output.log", "r", encoding="utf-8", errors="replace") as f:
+                  ai_response = f.read().strip()
 
-              PR_URL=$(printf "%s" "$PR_BODY" | gh pr create \
-                --base main \
-                --head "$BRANCH" \
-                --title "fix: resolve issue #$ISSUE_NUMBER ($ISSUE_TITLE)" \
-                --body-file - || echo "")
-            fi
+          pr_url = ""
+          pr_err = ""
 
-            if [ -n "$PR_URL" ]; then
-              AI_RESPONSE=$(cat agent-output.log 2>/dev/null || echo "")
-              if [ -n "$AI_RESPONSE" ]; then
-                COMMENT_TEXT=$(printf "🤖 **Antigravity Runner** opened pull request %s\n\n### AI Response:\n%s" "$PR_URL" "$AI_RESPONSE")
-              else
-                COMMENT_TEXT="🤖 **Antigravity Runner** opened pull request $PR_URL with diagnosis and fix details."
-              fi
-              printf "%s" "$COMMENT_TEXT" | gh issue comment "$ISSUE_NUMBER" --body-file -
-            fi
-          fi
+          res_ls = subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True, text=True)
+          if res_ls.returncode == 0:
+              res_list = subprocess.run(["gh", "pr", "list", "--head", branch, "--json", "url", "--jq", ".[0].url"], capture_output=True, text=True)
+              existing_url = res_list.stdout.strip()
+
+              if existing_url:
+                  pr_url = existing_url
+              else:
+                  summary = ai_response if ai_response else f"Resolved issue #{issue_num} using Antigravity runner."
+                  pr_body = f"Closes #{issue_num}\n\n## Summary\n\n{summary}"
+                  res_create = subprocess.run(
+                      [
+                          "gh", "pr", "create",
+                          "--base", "main",
+                          "--head", branch,
+                          "--title", f"fix: resolve issue #{issue_num} ({issue_title})",
+                          "--body-file", "-"
+                      ],
+                      input=pr_body,
+                      capture_output=True,
+                      text=True
+                  )
+                  if res_create.returncode == 0:
+                      pr_url = res_create.stdout.strip()
+                  else:
+                      pr_err = (res_create.stderr or res_create.stdout).strip()
+
+          summary_section = ai_response if ai_response else "No summary recorded."
+
+          if pr_url:
+              comment_body = (
+                  f"🤖 **Antigravity Runner** successfully resolved issue #{issue_num} and opened pull request: {pr_url}\n\n"
+                  f"### 📋 Diagnosis & Fix Summary:\n{summary_section}\n\n"
+                  f"---\n*Run details: [Workflow Run #{run_id}]({run_url})*"
+              )
+          elif pr_err:
+              comment_body = (
+                  f"🤖 **Antigravity Runner** completed the fix and pushed branch `{branch}`, but could not create a pull request automatically.\n\n"
+                  f"**Error Details:**\n```\n{pr_err}\n```\n\n"
+                  f"> 💡 **Action Required:**\n"
+                  f"> 1. Enable **Settings → Actions → General → Workflow permissions → Allow GitHub Actions to create and approve pull requests**.\n"
+                  f"> 2. Or manually create a PR from branch [`{branch}`](https://github.com/{repo}/tree/{branch}) against `main`.\n\n"
+                  f"### 📋 Diagnosis & Fix Summary:\n{summary_section}\n\n"
+                  f"---\n*Run details: [Workflow Run #{run_id}]({run_url})*"
+              )
+          else:
+              comment_body = (
+                  f"🤖 **Antigravity Runner** completed execution for issue #{issue_num}.\n\n"
+                  f"### 📋 AI Diagnosis & Response:\n{summary_section}\n\n"
+                  f"---\n*Run details: [Workflow Run #{run_id}]({run_url})*"
+              )
+
+          subprocess.run(["gh", "issue", "comment", str(issue_num), "--body-file", "-"], input=comment_body, text=True, check=True)
+          PYEOF
+
+      - name: Notify Issue on Failure
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_NO_UPDATE_NOTIFIER: "1"
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_ID: ${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
+          python3 - << 'PYEOF'
+          import os
+          import subprocess
+
+          issue_num = os.environ.get("ISSUE_NUMBER", "")
+          run_url = os.environ.get("RUN_URL", "")
+          run_id = os.environ.get("RUN_ID", "")
+          job_status = os.environ.get("JOB_STATUS", "failed")
+
+          log_tail = ""
+          if os.path.exists("agent-output.log"):
+              with open("agent-output.log", "r", encoding="utf-8", errors="replace") as f:
+                  lines = f.readlines()
+                  log_tail = "".join(lines[-30:]).strip()
+
+          comment_body = (
+              f"❌ **Antigravity Runner** execution **{job_status}** for issue #{issue_num}.\n\n"
+              f"### 🔍 Actionable Insights:\n"
+              f"- **Run Logs**: Inspect workflow step outputs at [Workflow Run #{run_id}]({run_url}).\n"
+              f"- **Artifacts**: Download `antigravity-logs-issue-{issue_num}` from the workflow run summary for the full execution trace.\n"
+              f"- **Loki Telemetry**: Query Loki in Grafana via `{{app=\"antigravity-runner\", issue=\"{issue_num}\", run_id=\"{run_id}\"}}`.\n"
+              f"- **Next Steps**: Re-trigger with `/fix <additional details>` or inspect failure in the logs above.\n"
+          )
+
+          if log_tail:
+              comment_body += f"\n### ⚠️ Recent Log Excerpt:\n```\n{log_tail}\n```\n"
+
+          comment_body += f"\n---\n*Run details: [Workflow Run #{run_id}]({run_url})*"
+
+          subprocess.run(["gh", "issue", "comment", str(issue_num), "--body-file", "-"], input=comment_body, text=True)
+          PYEOF
