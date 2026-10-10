@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/antigravity-fix.yml": {
-    "mtime": 1791623048.704663,
-    "seen": 1791623068.1430078,
-    "ast_hash": "f8dbbac89532838d4aebc7c88b383137",
+    "mtime": 1791623165.2561266,
+    "seen": 1791623183.3687265,
+    "ast_hash": "4b0384d215ce805bcc76a2ca7558628c",
     "semantic_hash": ""
   },
   ".scratch/agent-observability/research.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1788108345.0022447,
-    "seen": 1791622813.8540268,
-    "ast_hash": "5cc1a6d2b0195fbfbf88096c0fc7673b",
+    "mtime": 1791623153.884067,
+    "seen": 1791623183.368742,
+    "ast_hash": "ac38bcab716575fb64576a55c784294b",
     "semantic_hash": ""
   },
   "CONTEXT.md": {

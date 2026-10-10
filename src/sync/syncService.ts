@@ -25,6 +25,13 @@ export function computeContentHash(message: RawSmsMessage): string {
   return (4294967296 * (2097151 & hash2) + (hash1 >>> 0)).toString(16);
 }
 
+function normalizeSenderIdentifier(sender: string): string {
+  const clean = sender.trim().toLowerCase();
+  // Strip common telecom routing code prefix if present (e.g. "vm-hdfcbk" -> "hdfcbk", "vk-sbiinb" -> "sbiinb")
+  const strippedPrefix = clean.replace(/^[a-z0-9]{2,3}-/i, '');
+  return strippedPrefix || clean;
+}
+
 export function matchesSender(address: string, senderRule: string): boolean {
   const cleanAddress = address.trim().toLowerCase();
   const cleanRule = senderRule.trim().toLowerCase();
@@ -34,6 +41,23 @@ export function matchesSender(address: string, senderRule: string): boolean {
   if (cleanAddress.endsWith(`-${cleanRule}`) || cleanAddress.endsWith(cleanRule)) {
     return true;
   }
+  if (cleanRule.endsWith(`-${cleanAddress}`) || cleanRule.endsWith(cleanAddress)) {
+    return true;
+  }
+
+  const normAddress = normalizeSenderIdentifier(cleanAddress);
+  const normRule = normalizeSenderIdentifier(cleanRule);
+
+  if (normAddress === normRule) {
+    return true;
+  }
+  if (normAddress.endsWith(`-${normRule}`) || normAddress.endsWith(normRule)) {
+    return true;
+  }
+  if (normRule.endsWith(`-${normAddress}`) || normRule.endsWith(normAddress)) {
+    return true;
+  }
+
   return false;
 }
 

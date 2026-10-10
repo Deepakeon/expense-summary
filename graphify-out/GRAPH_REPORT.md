@@ -1,26 +1,26 @@
-# Graph Report - expenseSummary  (2026-10-10)
+# Graph Report - expense-summary  (2026-10-10)
 
 ## Corpus Check
-- 89 files · ~33,100 words
+- 89 files · ~33,372 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 23 file(s) not represented in the graph (top: (none) 6, .xml 4, .properties 2)
+- Unclassified: 24 file(s) not represented in the graph (top: (none) 6, .xml 4, .properties 2)
 
 ## Summary
-- 480 nodes · 784 edges · 57 communities (27 shown, 30 thin omitted)
+- 482 nodes · 790 edges · 56 communities (26 shown, 30 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d9c0c13d`
+- Built from commit: `268e0600`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - DatabaseRepository
-- DashboardScreen.tsx
+- AppShell.tsx
 - repository.ts
 - package.json
-- TemplateBuilderModal.tsx
+- SenderRulesScreen.tsx
 - SmsReaderModule.kt
 - devDependencies
 - AppDelegate
@@ -62,15 +62,14 @@
 - 06-transactions-list-and-detail-ui.md
 - 07-review-queue-and-quarantined-messages-ui.md
 - 08-dashboard-summary-and-navigation-shell.md
-- AppShell.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `DatabaseRepository` - 44 edges
 2. `ISmsReader` - 16 edges
 3. `react` - 15 edges
 4. `IDatabaseDriver` - 15 edges
-5. `react-native` - 13 edges
-6. `SmsReaderModule` - 12 edges
+5. `SmsReaderModule` - 13 edges
+6. `react-native` - 13 edges
 7. `initDatabase()` - 11 edges
 8. `RawSmsMessage` - 11 edges
 9. `BatchSyncService` - 11 edges
@@ -81,37 +80,37 @@
   learning-records/0003-slash-command-and-issue-event-routing.md → scripts/observability/loki_forwarder.py
 - `App()` --calls--> `getDatabaseRepository()`  [EXTRACTED]
   App.tsx → src/db/getDb.ts
-- `App()` --calls--> `BatchSyncService`  [EXTRACTED]
-  App.tsx → src/sync/syncService.ts
 - `App()` --calls--> `AppShell()`  [EXTRACTED]
   App.tsx → src/navigation/AppShell.tsx
+- `App()` --calls--> `BatchSyncService`  [EXTRACTED]
+  App.tsx → src/sync/syncService.ts
 - `MockSmsReader` --implements--> `ISmsReader`  [EXTRACTED]
   __tests__/components/DashboardAndAppShell.test.tsx → src/sms/types.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (57 total, 30 thin omitted)
+## Communities (56 total, 30 thin omitted)
 
 ### Community 0 - "DatabaseRepository"
-Cohesion: 0.10
-Nodes (18): TemplateBuilderModalProps, styles, TransactionDetailModal(), TransactionDetailModalProps, DatabaseRepository, Category, CategorySummary, ExtractionTemplate (+10 more)
+Cohesion: 0.08
+Nodes (21): TemplateBuilderModalProps, styles, TransactionDetailModal(), TransactionDetailModalProps, DatabaseRepository, Category, CategorySummary, ExtractionTemplate (+13 more)
 
-### Community 1 - "DashboardScreen.tsx"
+### Community 1 - "AppShell.tsx"
 Cohesion: 0.09
-Nodes (18): AppShellProps, DashboardScreenProps, styles, MockPermissionProvider, MockSmsProvider, setMockPermissionProvider(), setMockSmsProvider(), smsReader (+10 more)
+Nodes (30): App(), displayName, name, styles, react-native, react-native-safe-area-context, ActiveTab, AppShell() (+22 more)
 
 ### Community 2 - "repository.ts"
 Cohesion: 0.11
-Nodes (17): react-test-renderer, @op-engineering/op-sqlite, react-test-renderer, IDatabaseDriver, QueryResult, getDatabaseRepository(), createNodeSqliteDriver(), NodeSqliteDriver (+9 more)
+Nodes (16): react-test-renderer, react, react-test-renderer, IDatabaseDriver, QueryResult, getDatabaseRepository(), createNodeSqliteDriver(), NodeSqliteDriver (+8 more)
 
 ### Community 3 - "package.json"
 Cohesion: 0.05
-Nodes (41): config, { getDefaultConfig, mergeConfig }, dependencies, @op-engineering/op-sqlite, react, react-native, @react-native/new-app-screen, react-native-safe-area-context (+33 more)
+Nodes (42): config, { getDefaultConfig, mergeConfig }, dependencies, @op-engineering/op-sqlite, react, react-native, @react-native/new-app-screen, react-native-safe-area-context (+34 more)
 
-### Community 4 - "TemplateBuilderModal.tsx"
-Cohesion: 0.32
-Nodes (10): styles, TemplateBuilderModal(), compileTemplate(), escapeRegex(), extractTransactionFields(), ParsedTransactionFields, SUPPORTED_TOKENS, SupportedToken (+2 more)
+### Community 4 - "SenderRulesScreen.tsx"
+Cohesion: 0.18
+Nodes (16): AddSenderRuleModal(), AddSenderRuleModalProps, styles, styles, TemplateBuilderModal(), compileTemplate(), escapeRegex(), extractTransactionFields() (+8 more)
 
 ### Community 6 - "devDependencies"
 Cohesion: 0.09
@@ -197,10 +196,6 @@ Nodes (3): Agentic Observability with Arize Phoenix and Stream JSON, Evidence, I
 Cohesion: 0.50
 Nodes (3): Knowledge, Self-Hosted Runner & Local Agentic Workflows Resources, Wisdom (Communities)
 
-### Community 56 - "AppShell.tsx"
-Cohesion: 0.13
-Nodes (20): App(), displayName, name, styles, react, react-native, react-native-safe-area-context, AddSenderRuleModal() (+12 more)
-
 ## Knowledge Gaps
 - **25 isolated node(s):** `UIKit`, `React`, `React_RCTAppDelegate`, `ReactAppDependencyProvider`, `@react-native/new-app-screen` (+20 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 256 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
@@ -209,17 +204,17 @@ Nodes (20): App(), displayName, name, styles, react, react-native, react-native-
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `RawSmsMessage` connect `DashboardScreen.tsx` to `repository.ts`?**
-  _High betweenness centrality (0.066) - this node is a cross-community bridge._
+- **Why does `SmsReaderModule` connect `SmsReaderModule.kt` to `MainApplication.kt`?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **What connects `UIKit`, `React`, `React_RCTAppDelegate` to the rest of the system?**
   _25 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `DatabaseRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.09595959595959595 - nodes in this community are weakly interconnected._
-- **Why does `SmsReaderModule` connect `SmsReaderModule.kt` to `MainApplication.kt`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **Should `DashboardScreen.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.09388335704125178 - nodes in this community are weakly interconnected._
-- **Why does `DatabaseRepository` connect `DatabaseRepository` to `AppShell.tsx`, `DashboardScreen.tsx`, `repository.ts`?**
+  _Cohesion score 0.0815686274509804 - nodes in this community are weakly interconnected._
+- **Why does `DatabaseRepository` connect `DatabaseRepository` to `AppShell.tsx`, `repository.ts`, `SenderRulesScreen.tsx`?**
   _High betweenness centrality (0.053) - this node is a cross-community bridge._
+- **Should `AppShell.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.0899854862119013 - nodes in this community are weakly interconnected._
 - **Should `repository.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.10505050505050505 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11033681765389082 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._

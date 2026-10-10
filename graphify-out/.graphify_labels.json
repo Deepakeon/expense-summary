@@ -1,9 +1,9 @@
 {
   "0": "DatabaseRepository",
-  "1": "DashboardScreen.tsx",
+  "1": "AppShell.tsx",
   "2": "repository.ts",
   "3": "package.json",
-  "4": "TemplateBuilderModal.tsx",
+  "4": "SenderRulesScreen.tsx",
   "5": "SmsReaderModule.kt",
   "6": "devDependencies",
   "7": "AppDelegate",
@@ -54,6 +54,5 @@
   "52": ".eslintrc.js",
   "53": "jest.config.js",
   "54": ".prettierrc.js",
-  "55": "@react-native/metro-config",
-  "56": "AppShell.tsx"
+  "55": "@react-native/metro-config"
 }

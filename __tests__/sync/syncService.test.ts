@@ -1,7 +1,7 @@
 import { initDatabase } from '../../src/db/schema';
 import { createNodeSqliteDriver } from '../../src/db/nodeDriver';
 import { DatabaseRepository } from '../../src/db/repository';
-import { BatchSyncService } from '../../src/sync/syncService';
+import { BatchSyncService, matchesSender } from '../../src/sync/syncService';
 import { ISmsReader, RawSmsMessage } from '../../src/sms/types';
 
 class MockSmsReader implements ISmsReader {
@@ -22,11 +22,7 @@ class MockSmsReader implements ISmsReader {
     }
     if (options?.senders && options.senders.length > 0) {
       list = list.filter((m) =>
-        options.senders!.some(
-          (s) =>
-            m.sender.toLowerCase() === s.toLowerCase() ||
-            m.sender.toLowerCase().endsWith(s.toLowerCase())
-        )
+        options.senders!.some((s) => matchesSender(m.sender, s))
       );
     }
     return list;
@@ -162,5 +158,34 @@ describe('Batch Sync Pipeline (Ticket 04)', () => {
     expect(transactions).toHaveLength(1);
     expect(transactions[0].merchant).toBe('Merchant B');
     expect(repository.getLastSyncTimestamp()).toBe(2000);
+  });
+
+  it('reproduces Issue #1: extracts transactions when sender rule is configured as VM-HDFCBK or message has prefix/sender differences', async () => {
+    // User reproduces step 1: Configure a Sender Rule matching the bank sender (e.g. VM-HDFCBK)
+    const rule = repository.createSenderRule('VM-HDFCBK');
+    repository.createExtractionTemplate({
+      sender_rule_id: rule.id,
+      template_pattern: 'Alert: Rs. {amount} spent at {merchant} from A/c {account}',
+      transaction_type: 'debit',
+    });
+
+    mockReader.messages = [
+      {
+        id: 'msg_h1',
+        sender: 'HDFCBK', // device inbox has plain HDFCBK or VK-HDFCBK
+        body: 'Alert: Rs. 500 spent at Starbucks from A/c XX9999',
+        timestamp: 1000,
+      },
+      {
+        id: 'msg_h2',
+        sender: 'BZ-HDFCBK',
+        body: 'Alert: Rs. 1500 spent at Croma from A/c XX9999',
+        timestamp: 2000,
+      },
+    ];
+
+    const result = await syncService.runBatchSync();
+    expect(result.syncedCount).toBe(2);
+    expect(repository.getTransactions()).toHaveLength(2);
   });
 });

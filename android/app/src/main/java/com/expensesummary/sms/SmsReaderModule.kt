@@ -172,6 +172,12 @@ class SmsReaderModule(private val reactContext: ReactApplicationContext) :
     }
   }
 
+  private fun normalizeSenderIdentifier(sender: String): String {
+    val clean = sender.trim()
+    // Strip common telecom routing code prefix if present (e.g. "VM-HDFCBK" -> "HDFCBK")
+    return clean.replace(Regex("^[A-Za-z0-9]{2,3}-"), "").ifEmpty { clean }
+  }
+
   private fun matchesSender(address: String, senderRule: String): Boolean {
     val cleanAddress = address.trim()
     val cleanRule = senderRule.trim()
@@ -183,6 +189,26 @@ class SmsReaderModule(private val reactContext: ReactApplicationContext) :
         cleanAddress.endsWith(cleanRule, ignoreCase = true)) {
       return true
     }
+    if (cleanRule.endsWith("-$cleanAddress", ignoreCase = true) ||
+        cleanRule.endsWith(cleanAddress, ignoreCase = true)) {
+      return true
+    }
+
+    val normAddress = normalizeSenderIdentifier(cleanAddress)
+    val normRule = normalizeSenderIdentifier(cleanRule)
+
+    if (normAddress.equals(normRule, ignoreCase = true)) {
+      return true
+    }
+    if (normAddress.endsWith("-$normRule", ignoreCase = true) ||
+        normAddress.endsWith(normRule, ignoreCase = true)) {
+      return true
+    }
+    if (normRule.endsWith("-$normAddress", ignoreCase = true) ||
+        normRule.endsWith(normAddress, ignoreCase = true)) {
+      return true
+    }
+
     return false
   }
 }
